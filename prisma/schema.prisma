@@ -12,3 +12,96 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+enum Role {
+  BRAND
+  CREATOR
+}
+
+enum BriefStatus {
+  OPEN
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum BidStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+enum SubmissionStatus {
+  PENDING
+  APPROVED
+  REVISIONS
+}
+
+model User {
+  id        String @id @default(cuid())
+  clerkId   String @unique
+  email     String @unique
+  role      Role
+  credits   Int    @default(0)
+
+  briefsAsBrand  Brief[]   @relation("BrandBriefs")
+  bidsAsCreator  Bid[]     @relation("CreatorBids")
+  projectsAsBrand   Project[] @relation("BrandProjects")
+  projectsAsCreator Project[] @relation("CreatorProjects")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Brief {
+  id                 String       @id @default(cuid())
+  title              String
+  productDescription String
+  hook1              String
+  hook2              String
+  hook3              String
+  status             BriefStatus  @default(OPEN)
+
+  brandId String
+  brand   User         @relation("BrandBriefs", fields: [brandId], references: [id])
+
+  bids     Bid[]
+  projects Project[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Bid {
+  id        String    @id @default(cuid())
+  pitchText String
+  amount    Int
+  status    BidStatus @default(PENDING)
+
+  briefId String
+  brief   Brief   @relation(fields: [briefId], references: [id])
+
+  creatorId String
+  creator   User    @relation("CreatorBids", fields: [creatorId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Project {
+  id               String            @id @default(cuid())
+  videoUrl         String?
+  submissionStatus SubmissionStatus  @default(PENDING)
+
+  briefId  String
+  brief    Brief  @relation(fields: [briefId], references: [id])
+
+  brandId  String
+  brand    User   @relation("BrandProjects", fields: [brandId], references: [id])
+
+  creatorId String
+  creator   User   @relation("CreatorProjects", fields: [creatorId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
