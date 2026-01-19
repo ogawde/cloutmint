@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client"
+  provider = "prisma-client-js"
   output   = "../src/generated/prisma"
 }
 
@@ -37,14 +37,14 @@ enum SubmissionStatus {
 }
 
 model User {
-  id        String @id @default(cuid())
-  clerkId   String @unique
-  email     String @unique
-  role      Role
-  credits   Int    @default(0)
+  id      String @id @default(cuid())
+  clerkId String @unique
+  email   String @unique
+  role    Role
+  credits Int    @default(0)
 
-  briefsAsBrand  Brief[]   @relation("BrandBriefs")
-  bidsAsCreator  Bid[]     @relation("CreatorBids")
+  briefsAsBrand     Brief[]   @relation("BrandBriefs")
+  bidsAsCreator     Bid[]     @relation("CreatorBids")
   projectsAsBrand   Project[] @relation("BrandProjects")
   projectsAsCreator Project[] @relation("CreatorProjects")
 
@@ -53,16 +53,16 @@ model User {
 }
 
 model Brief {
-  id                 String       @id @default(cuid())
+  id                 String      @id @default(cuid())
   title              String
   productDescription String
   hook1              String
   hook2              String
   hook3              String
-  status             BriefStatus  @default(OPEN)
+  status             BriefStatus @default(OPEN)
 
   brandId String
-  brand   User         @relation("BrandBriefs", fields: [brandId], references: [id])
+  brand   User   @relation("BrandBriefs", fields: [brandId], references: [id])
 
   bids     Bid[]
   projects Project[]
@@ -78,25 +78,25 @@ model Bid {
   status    BidStatus @default(PENDING)
 
   briefId String
-  brief   Brief   @relation(fields: [briefId], references: [id])
+  brief   Brief  @relation(fields: [briefId], references: [id])
 
   creatorId String
-  creator   User    @relation("CreatorBids", fields: [creatorId], references: [id])
+  creator   User   @relation("CreatorBids", fields: [creatorId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Project {
-  id               String            @id @default(cuid())
+  id               String           @id @default(cuid())
   videoUrl         String?
-  submissionStatus SubmissionStatus  @default(PENDING)
+  submissionStatus SubmissionStatus @default(PENDING)
 
-  briefId  String
-  brief    Brief  @relation(fields: [briefId], references: [id])
+  briefId String
+  brief   Brief  @relation(fields: [briefId], references: [id])
 
-  brandId  String
-  brand    User   @relation("BrandProjects", fields: [brandId], references: [id])
+  brandId String
+  brand   User   @relation("BrandProjects", fields: [brandId], references: [id])
 
   creatorId String
   creator   User   @relation("CreatorProjects", fields: [creatorId], references: [id])
@@ -104,4 +104,3 @@ model Project {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
-
