@@ -134,6 +134,7 @@ exports.Prisma.BriefScalarFieldEnum = {
   id: 'id',
   title: 'title',
   productDescription: 'productDescription',
+  reelScript: 'reelScript',
   hook1: 'hook1',
   hook2: 'hook2',
   hook3: 'hook3',

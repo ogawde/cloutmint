@@ -2516,6 +2516,7 @@ export namespace Prisma {
     id: string | null
     title: string | null
     productDescription: string | null
+    reelScript: string | null
     hook1: string | null
     hook2: string | null
     hook3: string | null
@@ -2529,6 +2530,7 @@ export namespace Prisma {
     id: string | null
     title: string | null
     productDescription: string | null
+    reelScript: string | null
     hook1: string | null
     hook2: string | null
     hook3: string | null
@@ -2542,6 +2544,7 @@ export namespace Prisma {
     id: number
     title: number
     productDescription: number
+    reelScript: number
     hook1: number
     hook2: number
     hook3: number
@@ -2557,6 +2560,7 @@ export namespace Prisma {
     id?: true
     title?: true
     productDescription?: true
+    reelScript?: true
     hook1?: true
     hook2?: true
     hook3?: true
@@ -2570,6 +2574,7 @@ export namespace Prisma {
     id?: true
     title?: true
     productDescription?: true
+    reelScript?: true
     hook1?: true
     hook2?: true
     hook3?: true
@@ -2583,6 +2588,7 @@ export namespace Prisma {
     id?: true
     title?: true
     productDescription?: true
+    reelScript?: true
     hook1?: true
     hook2?: true
     hook3?: true
@@ -2669,6 +2675,7 @@ export namespace Prisma {
     id: string
     title: string
     productDescription: string
+    reelScript: string
     hook1: string
     hook2: string
     hook3: string
@@ -2699,6 +2706,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     productDescription?: boolean
+    reelScript?: boolean
     hook1?: boolean
     hook2?: boolean
     hook3?: boolean
@@ -2716,6 +2724,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     productDescription?: boolean
+    reelScript?: boolean
     hook1?: boolean
     hook2?: boolean
     hook3?: boolean
@@ -2730,6 +2739,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     productDescription?: boolean
+    reelScript?: boolean
     hook1?: boolean
     hook2?: boolean
     hook3?: boolean
@@ -2744,6 +2754,7 @@ export namespace Prisma {
     id?: boolean
     title?: boolean
     productDescription?: boolean
+    reelScript?: boolean
     hook1?: boolean
     hook2?: boolean
     hook3?: boolean
@@ -2753,7 +2764,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type BriefOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "productDescription" | "hook1" | "hook2" | "hook3" | "status" | "brandId" | "createdAt" | "updatedAt", ExtArgs["result"]["brief"]>
+  export type BriefOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "productDescription" | "reelScript" | "hook1" | "hook2" | "hook3" | "status" | "brandId" | "createdAt" | "updatedAt", ExtArgs["result"]["brief"]>
   export type BriefInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     brand?: boolean | UserDefaultArgs<ExtArgs>
     bids?: boolean | Brief$bidsArgs<ExtArgs>
@@ -2778,6 +2789,7 @@ export namespace Prisma {
       id: string
       title: string
       productDescription: string
+      reelScript: string
       hook1: string
       hook2: string
       hook3: string
@@ -3214,6 +3226,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Brief", 'String'>
     readonly title: FieldRef<"Brief", 'String'>
     readonly productDescription: FieldRef<"Brief", 'String'>
+    readonly reelScript: FieldRef<"Brief", 'String'>
     readonly hook1: FieldRef<"Brief", 'String'>
     readonly hook2: FieldRef<"Brief", 'String'>
     readonly hook3: FieldRef<"Brief", 'String'>
@@ -5966,6 +5979,7 @@ export namespace Prisma {
     id: 'id',
     title: 'title',
     productDescription: 'productDescription',
+    reelScript: 'reelScript',
     hook1: 'hook1',
     hook2: 'hook2',
     hook3: 'hook3',
@@ -6233,6 +6247,7 @@ export namespace Prisma {
     id?: StringFilter<"Brief"> | string
     title?: StringFilter<"Brief"> | string
     productDescription?: StringFilter<"Brief"> | string
+    reelScript?: StringFilter<"Brief"> | string
     hook1?: StringFilter<"Brief"> | string
     hook2?: StringFilter<"Brief"> | string
     hook3?: StringFilter<"Brief"> | string
@@ -6249,6 +6264,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     productDescription?: SortOrder
+    reelScript?: SortOrder
     hook1?: SortOrder
     hook2?: SortOrder
     hook3?: SortOrder
@@ -6268,6 +6284,7 @@ export namespace Prisma {
     NOT?: BriefWhereInput | BriefWhereInput[]
     title?: StringFilter<"Brief"> | string
     productDescription?: StringFilter<"Brief"> | string
+    reelScript?: StringFilter<"Brief"> | string
     hook1?: StringFilter<"Brief"> | string
     hook2?: StringFilter<"Brief"> | string
     hook3?: StringFilter<"Brief"> | string
@@ -6284,6 +6301,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     productDescription?: SortOrder
+    reelScript?: SortOrder
     hook1?: SortOrder
     hook2?: SortOrder
     hook3?: SortOrder
@@ -6303,6 +6321,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Brief"> | string
     title?: StringWithAggregatesFilter<"Brief"> | string
     productDescription?: StringWithAggregatesFilter<"Brief"> | string
+    reelScript?: StringWithAggregatesFilter<"Brief"> | string
     hook1?: StringWithAggregatesFilter<"Brief"> | string
     hook2?: StringWithAggregatesFilter<"Brief"> | string
     hook3?: StringWithAggregatesFilter<"Brief"> | string
@@ -6553,6 +6572,7 @@ export namespace Prisma {
     id?: string
     title: string
     productDescription: string
+    reelScript: string
     hook1: string
     hook2: string
     hook3: string
@@ -6568,6 +6588,7 @@ export namespace Prisma {
     id?: string
     title: string
     productDescription: string
+    reelScript: string
     hook1: string
     hook2: string
     hook3: string
@@ -6583,6 +6604,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     productDescription?: StringFieldUpdateOperationsInput | string
+    reelScript?: StringFieldUpdateOperationsInput | string
     hook1?: StringFieldUpdateOperationsInput | string
     hook2?: StringFieldUpdateOperationsInput | string
     hook3?: StringFieldUpdateOperationsInput | string
@@ -6598,6 +6620,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     productDescription?: StringFieldUpdateOperationsInput | string
+    reelScript?: StringFieldUpdateOperationsInput | string
     hook1?: StringFieldUpdateOperationsInput | string
     hook2?: StringFieldUpdateOperationsInput | string
     hook3?: StringFieldUpdateOperationsInput | string
@@ -6613,6 +6636,7 @@ export namespace Prisma {
     id?: string
     title: string
     productDescription: string
+    reelScript: string
     hook1: string
     hook2: string
     hook3: string
@@ -6626,6 +6650,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     productDescription?: StringFieldUpdateOperationsInput | string
+    reelScript?: StringFieldUpdateOperationsInput | string
     hook1?: StringFieldUpdateOperationsInput | string
     hook2?: StringFieldUpdateOperationsInput | string
     hook3?: StringFieldUpdateOperationsInput | string
@@ -6638,6 +6663,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     productDescription?: StringFieldUpdateOperationsInput | string
+    reelScript?: StringFieldUpdateOperationsInput | string
     hook1?: StringFieldUpdateOperationsInput | string
     hook2?: StringFieldUpdateOperationsInput | string
     hook3?: StringFieldUpdateOperationsInput | string
@@ -6982,6 +7008,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     productDescription?: SortOrder
+    reelScript?: SortOrder
     hook1?: SortOrder
     hook2?: SortOrder
     hook3?: SortOrder
@@ -6995,6 +7022,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     productDescription?: SortOrder
+    reelScript?: SortOrder
     hook1?: SortOrder
     hook2?: SortOrder
     hook3?: SortOrder
@@ -7008,6 +7036,7 @@ export namespace Prisma {
     id?: SortOrder
     title?: SortOrder
     productDescription?: SortOrder
+    reelScript?: SortOrder
     hook1?: SortOrder
     hook2?: SortOrder
     hook3?: SortOrder
@@ -7758,6 +7787,7 @@ export namespace Prisma {
     id?: string
     title: string
     productDescription: string
+    reelScript: string
     hook1: string
     hook2: string
     hook3: string
@@ -7772,6 +7802,7 @@ export namespace Prisma {
     id?: string
     title: string
     productDescription: string
+    reelScript: string
     hook1: string
     hook2: string
     hook3: string
@@ -7905,6 +7936,7 @@ export namespace Prisma {
     id?: StringFilter<"Brief"> | string
     title?: StringFilter<"Brief"> | string
     productDescription?: StringFilter<"Brief"> | string
+    reelScript?: StringFilter<"Brief"> | string
     hook1?: StringFilter<"Brief"> | string
     hook2?: StringFilter<"Brief"> | string
     hook3?: StringFilter<"Brief"> | string
@@ -8154,6 +8186,7 @@ export namespace Prisma {
     id?: string
     title: string
     productDescription: string
+    reelScript: string
     hook1: string
     hook2: string
     hook3: string
@@ -8168,6 +8201,7 @@ export namespace Prisma {
     id?: string
     title: string
     productDescription: string
+    reelScript: string
     hook1: string
     hook2: string
     hook3: string
@@ -8229,6 +8263,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     productDescription?: StringFieldUpdateOperationsInput | string
+    reelScript?: StringFieldUpdateOperationsInput | string
     hook1?: StringFieldUpdateOperationsInput | string
     hook2?: StringFieldUpdateOperationsInput | string
     hook3?: StringFieldUpdateOperationsInput | string
@@ -8243,6 +8278,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     productDescription?: StringFieldUpdateOperationsInput | string
+    reelScript?: StringFieldUpdateOperationsInput | string
     hook1?: StringFieldUpdateOperationsInput | string
     hook2?: StringFieldUpdateOperationsInput | string
     hook3?: StringFieldUpdateOperationsInput | string
@@ -8294,6 +8330,7 @@ export namespace Prisma {
     id?: string
     title: string
     productDescription: string
+    reelScript: string
     hook1: string
     hook2: string
     hook3: string
@@ -8308,6 +8345,7 @@ export namespace Prisma {
     id?: string
     title: string
     productDescription: string
+    reelScript: string
     hook1: string
     hook2: string
     hook3: string
@@ -8400,6 +8438,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     productDescription?: StringFieldUpdateOperationsInput | string
+    reelScript?: StringFieldUpdateOperationsInput | string
     hook1?: StringFieldUpdateOperationsInput | string
     hook2?: StringFieldUpdateOperationsInput | string
     hook3?: StringFieldUpdateOperationsInput | string
@@ -8414,6 +8453,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     productDescription?: StringFieldUpdateOperationsInput | string
+    reelScript?: StringFieldUpdateOperationsInput | string
     hook1?: StringFieldUpdateOperationsInput | string
     hook2?: StringFieldUpdateOperationsInput | string
     hook3?: StringFieldUpdateOperationsInput | string
@@ -8502,6 +8542,7 @@ export namespace Prisma {
     id?: string
     title: string
     productDescription: string
+    reelScript: string
     hook1: string
     hook2: string
     hook3: string
@@ -8544,6 +8585,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     productDescription?: StringFieldUpdateOperationsInput | string
+    reelScript?: StringFieldUpdateOperationsInput | string
     hook1?: StringFieldUpdateOperationsInput | string
     hook2?: StringFieldUpdateOperationsInput | string
     hook3?: StringFieldUpdateOperationsInput | string
@@ -8558,6 +8600,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     productDescription?: StringFieldUpdateOperationsInput | string
+    reelScript?: StringFieldUpdateOperationsInput | string
     hook1?: StringFieldUpdateOperationsInput | string
     hook2?: StringFieldUpdateOperationsInput | string
     hook3?: StringFieldUpdateOperationsInput | string
@@ -8572,6 +8615,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
     productDescription?: StringFieldUpdateOperationsInput | string
+    reelScript?: StringFieldUpdateOperationsInput | string
     hook1?: StringFieldUpdateOperationsInput | string
     hook2?: StringFieldUpdateOperationsInput | string
     hook3?: StringFieldUpdateOperationsInput | string
