@@ -81,18 +81,29 @@ function BriefCard({ brief }: BriefCardProps) {
           <p className="text-xs uppercase tracking-wide text-zinc-500">
             Reel Script
           </p>
-          <p className="text-sm text-zinc-100 whitespace-pre-wrap">
-            {isExpanded ? brief.reelScript : preview}
-          </p>
-          {brief.reelScript.length > 100 && (
+          <div className="rounded-md bg-zinc-900/80 border border-zinc-800 px-3 py-2 max-h-40 overflow-y-auto">
+            <p className="text-sm text-zinc-100 whitespace-pre-wrap">
+              {isExpanded ? brief.reelScript : preview}
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            {brief.reelScript.length > 100 && (
+              <button
+                type="button"
+                onClick={() => setIsExpanded((value) => !value)}
+                className="text-xs font-medium text-emerald-400 hover:text-emerald-300"
+              >
+                {isExpanded ? "See Less" : "See More"}
+              </button>
+            )}
             <button
               type="button"
-              onClick={() => setIsExpanded((value) => !value)}
-              className="self-start text-xs font-medium text-emerald-400 hover:text-emerald-300"
+              onClick={() => navigator.clipboard.writeText(brief.reelScript)}
+              className="text-xs font-medium text-emerald-400 hover:text-emerald-300"
             >
-              {isExpanded ? "See Less" : "See More"}
+              Copy Script
             </button>
-          )}
+          </div>
         </div>
       </CardContent>
     </Card>

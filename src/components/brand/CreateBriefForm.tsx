@@ -1,6 +1,7 @@
-"use client";
+ "use client";
 
 import { useState, FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -12,6 +13,7 @@ export function CreateBriefForm() {
   const [title, setTitle] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -31,6 +33,7 @@ export function CreateBriefForm() {
 
       setTitle("");
       setProductDescription("");
+      router.refresh();
       alert("Brief created and hooks minted successfully.");
     } catch (error) {
       alert("Something went wrong while creating the brief.");
