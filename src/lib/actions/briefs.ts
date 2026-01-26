@@ -3,21 +3,26 @@
 import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { generateHooks } from "@/lib/ai";
+import { auth } from "@clerk/nextjs/server";
 
 type CreateBriefInput = Pick<
   Prisma.Args<typeof prisma.brief, "create">["data"],
   "title" | "productDescription"
-> & {
-  brandId: string;
-};
+>;
 
 export async function createBrief(input: CreateBriefInput) {
-  const { title, productDescription, brandId } = input;
+  const { title, productDescription } = input;
 
   try {
+    const { userId } = await auth();
+
+    if (!userId) {
+      throw new Error("Unauthorized");
+    }
+
     const brandUser = await prisma.user.findUnique({
       where: {
-        id: brandId,
+        clerkId: userId,
       },
       select: {
         id: true,
@@ -29,8 +34,11 @@ export async function createBrief(input: CreateBriefInput) {
       throw new Error("Only authorized brands can create briefs.");
     }
 
-    const { hook1, hook2, hook3, reelScript } =
-      await generateHooks(productDescription);
+    const brandId = brandUser.id;
+
+    const { hook1, hook2, hook3, reelScript } = await generateHooks(
+      productDescription,
+    );
 
     const brief = await prisma.brief.create({
       data: {
