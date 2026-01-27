@@ -28,7 +28,6 @@ export function CreateBriefForm() {
       await createBrief({
         title,
         productDescription,
-        brandId: "placeholder-id",
       });
 
       setTitle("");
