@@ -32,6 +32,7 @@ export default async function Home() {
   if (user.role === "BRAND") {
     const briefs = await prisma.brief.findMany({
       where: { brandId: user.id },
+      include: { bids: true },
       orderBy: { createdAt: "desc" },
     });
 
@@ -39,7 +40,7 @@ export default async function Home() {
       <main className="min-h-screen bg-zinc-950 text-zinc-50">
         <div className="max-w-5xl mx-auto px-4 py-12 space-y-10">
           <CreateBriefForm />
-          <BriefList briefs={briefs} />
+          <BriefList briefs={briefs} userRole={user.role} />
         </div>
       </main>
     );
