@@ -1,7 +1,10 @@
 "use client";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { acceptBid } from "@/lib/actions/projects";
 
 type Bid = {
   id: string;
@@ -14,9 +17,23 @@ type BriefBidsProps = {
 };
 
 export function BriefBids({ bids }: BriefBidsProps) {
+  const router = useRouter();
+  const [pendingId, setPendingId] = useState<string | null>(null);
+
   if (!bids.length) {
     return null;
   }
+
+  const handleAccept = async (bidId: string) => {
+    setPendingId(bidId);
+
+    try {
+      await acceptBid(bidId);
+      router.refresh();
+    } finally {
+      setPendingId(null);
+    }
+  };
 
   return (
     <div className="mt-4 max-h-48 space-y-3 overflow-y-auto rounded-md border border-zinc-800 bg-zinc-950/60 p-3">
@@ -34,8 +51,10 @@ export function BriefBids({ bids }: BriefBidsProps) {
               type="button"
               size="sm"
               className="bg-emerald-600 text-xs text-white hover:bg-emerald-500"
+              disabled={pendingId === bid.id}
+              onClick={() => handleAccept(bid.id)}
             >
-              Accept Bid
+              {pendingId === bid.id ? "Accepting..." : "Accept Bid"}
             </Button>
           </div>
         </Card>
