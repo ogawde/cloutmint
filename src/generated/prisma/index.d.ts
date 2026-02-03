@@ -1302,10 +1302,12 @@ export namespace Prisma {
 
   export type UserAvgAggregateOutputType = {
     credits: number | null
+    earnings: number | null
   }
 
   export type UserSumAggregateOutputType = {
     credits: number | null
+    earnings: number | null
   }
 
   export type UserMinAggregateOutputType = {
@@ -1314,6 +1316,7 @@ export namespace Prisma {
     email: string | null
     role: $Enums.Role | null
     credits: number | null
+    earnings: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1324,6 +1327,7 @@ export namespace Prisma {
     email: string | null
     role: $Enums.Role | null
     credits: number | null
+    earnings: number | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1334,6 +1338,7 @@ export namespace Prisma {
     email: number
     role: number
     credits: number
+    earnings: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -1342,10 +1347,12 @@ export namespace Prisma {
 
   export type UserAvgAggregateInputType = {
     credits?: true
+    earnings?: true
   }
 
   export type UserSumAggregateInputType = {
     credits?: true
+    earnings?: true
   }
 
   export type UserMinAggregateInputType = {
@@ -1354,6 +1361,7 @@ export namespace Prisma {
     email?: true
     role?: true
     credits?: true
+    earnings?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1364,6 +1372,7 @@ export namespace Prisma {
     email?: true
     role?: true
     credits?: true
+    earnings?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1374,6 +1383,7 @@ export namespace Prisma {
     email?: true
     role?: true
     credits?: true
+    earnings?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1471,6 +1481,7 @@ export namespace Prisma {
     email: string
     role: $Enums.Role
     credits: number
+    earnings: number
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
@@ -1500,6 +1511,7 @@ export namespace Prisma {
     email?: boolean
     role?: boolean
     credits?: boolean
+    earnings?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     briefsAsBrand?: boolean | User$briefsAsBrandArgs<ExtArgs>
@@ -1515,6 +1527,7 @@ export namespace Prisma {
     email?: boolean
     role?: boolean
     credits?: boolean
+    earnings?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1525,6 +1538,7 @@ export namespace Prisma {
     email?: boolean
     role?: boolean
     credits?: boolean
+    earnings?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -1535,11 +1549,12 @@ export namespace Prisma {
     email?: boolean
     role?: boolean
     credits?: boolean
+    earnings?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clerkId" | "email" | "role" | "credits" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "clerkId" | "email" | "role" | "credits" | "earnings" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     briefsAsBrand?: boolean | User$briefsAsBrandArgs<ExtArgs>
     bidsAsCreator?: boolean | User$bidsAsCreatorArgs<ExtArgs>
@@ -1564,6 +1579,7 @@ export namespace Prisma {
       email: string
       role: $Enums.Role
       credits: number
+      earnings: number
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
@@ -1998,6 +2014,7 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'Role'>
     readonly credits: FieldRef<"User", 'Int'>
+    readonly earnings: FieldRef<"User", 'Int'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
@@ -5968,6 +5985,7 @@ export namespace Prisma {
     email: 'email',
     role: 'role',
     credits: 'credits',
+    earnings: 'earnings',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -6173,6 +6191,7 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     role?: EnumRoleFilter<"User"> | $Enums.Role
     credits?: IntFilter<"User"> | number
+    earnings?: IntFilter<"User"> | number
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     briefsAsBrand?: BriefListRelationFilter
@@ -6187,6 +6206,7 @@ export namespace Prisma {
     email?: SortOrder
     role?: SortOrder
     credits?: SortOrder
+    earnings?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     briefsAsBrand?: BriefOrderByRelationAggregateInput
@@ -6204,6 +6224,7 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     role?: EnumRoleFilter<"User"> | $Enums.Role
     credits?: IntFilter<"User"> | number
+    earnings?: IntFilter<"User"> | number
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     briefsAsBrand?: BriefListRelationFilter
@@ -6218,6 +6239,7 @@ export namespace Prisma {
     email?: SortOrder
     role?: SortOrder
     credits?: SortOrder
+    earnings?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -6236,6 +6258,7 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
     credits?: IntWithAggregatesFilter<"User"> | number
+    earnings?: IntWithAggregatesFilter<"User"> | number
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -6488,6 +6511,7 @@ export namespace Prisma {
     email: string
     role: $Enums.Role
     credits?: number
+    earnings?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     briefsAsBrand?: BriefCreateNestedManyWithoutBrandInput
@@ -6502,6 +6526,7 @@ export namespace Prisma {
     email: string
     role: $Enums.Role
     credits?: number
+    earnings?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     briefsAsBrand?: BriefUncheckedCreateNestedManyWithoutBrandInput
@@ -6516,6 +6541,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     credits?: IntFieldUpdateOperationsInput | number
+    earnings?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     briefsAsBrand?: BriefUpdateManyWithoutBrandNestedInput
@@ -6530,6 +6556,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     credits?: IntFieldUpdateOperationsInput | number
+    earnings?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     briefsAsBrand?: BriefUncheckedUpdateManyWithoutBrandNestedInput
@@ -6544,6 +6571,7 @@ export namespace Prisma {
     email: string
     role: $Enums.Role
     credits?: number
+    earnings?: number
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -6554,6 +6582,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     credits?: IntFieldUpdateOperationsInput | number
+    earnings?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6564,6 +6593,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     credits?: IntFieldUpdateOperationsInput | number
+    earnings?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6572,7 +6602,7 @@ export namespace Prisma {
     id?: string
     title: string
     productDescription: string
-    reelScript: string
+    reelScript?: string
     hook1: string
     hook2: string
     hook3: string
@@ -6588,7 +6618,7 @@ export namespace Prisma {
     id?: string
     title: string
     productDescription: string
-    reelScript: string
+    reelScript?: string
     hook1: string
     hook2: string
     hook3: string
@@ -6636,7 +6666,7 @@ export namespace Prisma {
     id?: string
     title: string
     productDescription: string
-    reelScript: string
+    reelScript?: string
     hook1: string
     hook2: string
     hook3: string
@@ -6902,12 +6932,14 @@ export namespace Prisma {
     email?: SortOrder
     role?: SortOrder
     credits?: SortOrder
+    earnings?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type UserAvgOrderByAggregateInput = {
     credits?: SortOrder
+    earnings?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -6916,6 +6948,7 @@ export namespace Prisma {
     email?: SortOrder
     role?: SortOrder
     credits?: SortOrder
+    earnings?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -6926,12 +6959,14 @@ export namespace Prisma {
     email?: SortOrder
     role?: SortOrder
     credits?: SortOrder
+    earnings?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
   export type UserSumOrderByAggregateInput = {
     credits?: SortOrder
+    earnings?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -7787,7 +7822,7 @@ export namespace Prisma {
     id?: string
     title: string
     productDescription: string
-    reelScript: string
+    reelScript?: string
     hook1: string
     hook2: string
     hook3: string
@@ -7802,7 +7837,7 @@ export namespace Prisma {
     id?: string
     title: string
     productDescription: string
-    reelScript: string
+    reelScript?: string
     hook1: string
     hook2: string
     hook3: string
@@ -8028,6 +8063,7 @@ export namespace Prisma {
     email: string
     role: $Enums.Role
     credits?: number
+    earnings?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     bidsAsCreator?: BidCreateNestedManyWithoutCreatorInput
@@ -8041,6 +8077,7 @@ export namespace Prisma {
     email: string
     role: $Enums.Role
     credits?: number
+    earnings?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     bidsAsCreator?: BidUncheckedCreateNestedManyWithoutCreatorInput
@@ -8130,6 +8167,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     credits?: IntFieldUpdateOperationsInput | number
+    earnings?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bidsAsCreator?: BidUpdateManyWithoutCreatorNestedInput
@@ -8143,6 +8181,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     credits?: IntFieldUpdateOperationsInput | number
+    earnings?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     bidsAsCreator?: BidUncheckedUpdateManyWithoutCreatorNestedInput
@@ -8186,7 +8225,7 @@ export namespace Prisma {
     id?: string
     title: string
     productDescription: string
-    reelScript: string
+    reelScript?: string
     hook1: string
     hook2: string
     hook3: string
@@ -8201,7 +8240,7 @@ export namespace Prisma {
     id?: string
     title: string
     productDescription: string
-    reelScript: string
+    reelScript?: string
     hook1: string
     hook2: string
     hook3: string
@@ -8223,6 +8262,7 @@ export namespace Prisma {
     email: string
     role: $Enums.Role
     credits?: number
+    earnings?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     briefsAsBrand?: BriefCreateNestedManyWithoutBrandInput
@@ -8236,6 +8276,7 @@ export namespace Prisma {
     email: string
     role: $Enums.Role
     credits?: number
+    earnings?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     briefsAsBrand?: BriefUncheckedCreateNestedManyWithoutBrandInput
@@ -8306,6 +8347,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     credits?: IntFieldUpdateOperationsInput | number
+    earnings?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     briefsAsBrand?: BriefUpdateManyWithoutBrandNestedInput
@@ -8319,6 +8361,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     credits?: IntFieldUpdateOperationsInput | number
+    earnings?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     briefsAsBrand?: BriefUncheckedUpdateManyWithoutBrandNestedInput
@@ -8330,7 +8373,7 @@ export namespace Prisma {
     id?: string
     title: string
     productDescription: string
-    reelScript: string
+    reelScript?: string
     hook1: string
     hook2: string
     hook3: string
@@ -8345,7 +8388,7 @@ export namespace Prisma {
     id?: string
     title: string
     productDescription: string
-    reelScript: string
+    reelScript?: string
     hook1: string
     hook2: string
     hook3: string
@@ -8367,6 +8410,7 @@ export namespace Prisma {
     email: string
     role: $Enums.Role
     credits?: number
+    earnings?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     briefsAsBrand?: BriefCreateNestedManyWithoutBrandInput
@@ -8380,6 +8424,7 @@ export namespace Prisma {
     email: string
     role: $Enums.Role
     credits?: number
+    earnings?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     briefsAsBrand?: BriefUncheckedCreateNestedManyWithoutBrandInput
@@ -8398,6 +8443,7 @@ export namespace Prisma {
     email: string
     role: $Enums.Role
     credits?: number
+    earnings?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     briefsAsBrand?: BriefCreateNestedManyWithoutBrandInput
@@ -8411,6 +8457,7 @@ export namespace Prisma {
     email: string
     role: $Enums.Role
     credits?: number
+    earnings?: number
     createdAt?: Date | string
     updatedAt?: Date | string
     briefsAsBrand?: BriefUncheckedCreateNestedManyWithoutBrandInput
@@ -8481,6 +8528,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     credits?: IntFieldUpdateOperationsInput | number
+    earnings?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     briefsAsBrand?: BriefUpdateManyWithoutBrandNestedInput
@@ -8494,6 +8542,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     credits?: IntFieldUpdateOperationsInput | number
+    earnings?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     briefsAsBrand?: BriefUncheckedUpdateManyWithoutBrandNestedInput
@@ -8518,6 +8567,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     credits?: IntFieldUpdateOperationsInput | number
+    earnings?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     briefsAsBrand?: BriefUpdateManyWithoutBrandNestedInput
@@ -8531,6 +8581,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     credits?: IntFieldUpdateOperationsInput | number
+    earnings?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     briefsAsBrand?: BriefUncheckedUpdateManyWithoutBrandNestedInput
@@ -8542,7 +8593,7 @@ export namespace Prisma {
     id?: string
     title: string
     productDescription: string
-    reelScript: string
+    reelScript?: string
     hook1: string
     hook2: string
     hook3: string

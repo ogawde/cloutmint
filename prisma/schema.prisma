@@ -42,6 +42,7 @@ model User {
   email   String @unique
   role    Role
   credits Int    @default(0)
+  earnings Int   @default(0)
 
   briefsAsBrand     Brief[]   @relation("BrandBriefs")
   bidsAsCreator     Bid[]     @relation("CreatorBids")
@@ -56,7 +57,7 @@ model Brief {
   id                 String      @id @default(cuid())
   title              String
   productDescription String
-  reelScript         String
+  reelScript         String      @default("")
   hook1              String
   hook2              String
   hook3              String

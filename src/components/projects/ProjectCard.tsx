@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { submitWork, approveWork } from "@/lib/actions/fulfillment";
 
 type Project = {
   id: string;
@@ -21,10 +23,30 @@ type ProjectCardProps = {
 };
 
 export function ProjectCard({ project, userRole }: ProjectCardProps) {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   const [videoUrl, setVideoUrl] = useState(project.videoUrl ?? "");
 
   const handleCopyScript = () => {
     navigator.clipboard.writeText(project.brief.reelScript);
+  };
+
+  const handleSubmitWork = () => {
+    if (!videoUrl.trim()) {
+      return;
+    }
+
+    startTransition(async () => {
+      await submitWork(project.id, videoUrl);
+      router.refresh();
+    });
+  };
+
+  const handleApprove = () => {
+    startTransition(async () => {
+      await approveWork(project.id);
+      router.refresh();
+    });
   };
 
   return (
@@ -74,8 +96,10 @@ export function ProjectCard({ project, userRole }: ProjectCardProps) {
             <Button
               type="button"
               className="mt-2 bg-emerald-600 hover:bg-emerald-500 text-white"
+              disabled={isPending}
+              onClick={handleSubmitWork}
             >
-              Submit Work
+              {isPending ? "Submitting..." : "Submit Work"}
             </Button>
           </div>
         )}
@@ -101,8 +125,10 @@ export function ProjectCard({ project, userRole }: ProjectCardProps) {
             <Button
               type="button"
               className="mt-2 bg-emerald-600 hover:bg-emerald-500 text-white"
+              disabled={isPending}
+              onClick={handleApprove}
             >
-              Approve
+              {isPending ? "Approving..." : "Approve"}
             </Button>
           </div>
         )}
