@@ -3,6 +3,7 @@ import { ClerkProvider, SignedIn, SignedOut, UserButton, SignInButton } from "@c
 import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { Geist, Geist_Mono } from "next/font/google";
+import { PageTransition } from "@/components/layout/PageTransition";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -83,7 +84,7 @@ export default async function RootLayout({
               </div>
             </div>
           </header>
-          {children}
+          <PageTransition>{children}</PageTransition>
         </body>
       </html>
     </ClerkProvider>
