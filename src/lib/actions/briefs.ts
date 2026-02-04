@@ -1,14 +1,13 @@
 "use server";
 
-import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { generateHooks } from "@/lib/ai";
 import { auth } from "@clerk/nextjs/server";
 
-type CreateBriefInput = Pick<
-  Prisma.Args<typeof prisma.brief, "create">["data"],
-  "title" | "productDescription"
->;
+type CreateBriefInput = {
+  title: string;
+  productDescription: string;
+};
 
 export async function createBrief(input: CreateBriefInput) {
   const { title, productDescription } = input;
