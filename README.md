@@ -20,6 +20,28 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Auth Setup (Better Auth)
+
+Set these env vars in `.env` before running auth flows:
+
+```bash
+BETTER_AUTH_SECRET=your_32_plus_char_secret
+BETTER_AUTH_URL=http://localhost:3000
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+DATABASE_URL=your_supabase_postgres_url
+```
+
+Auth route handler is mounted at `/api/auth/[...all]`.
+
+## Local Fresh Reset
+
+To reset local DB data and regenerate Prisma client:
+
+```bash
+bun run db:reset-local
+```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

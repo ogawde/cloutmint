@@ -1,11 +1,12 @@
-import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { ProjectCard } from "@/components/projects/ProjectCard";
+import { getAuthSession } from "@/lib/auth-session";
 
 export default async function ProjectsPage() {
-  const { userId } = await auth();
+  const session = await getAuthSession();
+  const authUserId = session?.user.id;
 
-  if (!userId) {
+  if (!authUserId) {
     return (
       <main className="min-h-screen bg-zinc-950 text-zinc-50">
         <div className="max-w-5xl mx-auto px-4 py-12">
@@ -20,7 +21,7 @@ export default async function ProjectsPage() {
 
   const user = await prisma.user.findUnique({
     where: {
-      clerkId: userId,
+      authUserId,
     },
     select: {
       id: true,

@@ -1,16 +1,123 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
+  provider   = "prisma-client-js"
+  output     = "../src/generated/prisma"
+  engineType = "binary"
 }
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model AuthUser {
+  id            String        @id
+  name          String
+  email         String        @unique
+  emailVerified Boolean
+  image         String?
+  createdAt     DateTime
+  updatedAt     DateTime
+  accounts      AuthAccount[]
+  sessions      AuthSession[]
+}
+
+model AuthSession {
+  id        String   @id
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime
+  updatedAt DateTime
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      AuthUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model AuthAccount {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime
+  updatedAt             DateTime
+  user                  AuthUser  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([providerId, accountId])
+}
+
+model AuthVerification {
+  id         String    @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime?
+  updatedAt  DateTime?
+}
+
+model User {
+  id                String    @id @default(cuid())
+  authUserId        String    @unique
+  email             String    @unique
+  role              Role?
+  credits           Int       @default(0)
+  earnings          Int       @default(0)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  bidsAsCreator     Bid[]     @relation("CreatorBids")
+  briefsAsBrand     Brief[]   @relation("BrandBriefs")
+  projectsAsBrand   Project[] @relation("BrandProjects")
+  projectsAsCreator Project[] @relation("CreatorProjects")
+}
+
+model Brief {
+  id                 String      @id @default(cuid())
+  title              String
+  productDescription String
+  reelScript         String      @default("")
+  hook1              String
+  hook2              String
+  hook3              String
+  status             BriefStatus @default(OPEN)
+  brandId            String
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+  bids               Bid[]
+  brand              User        @relation("BrandBriefs", fields: [brandId], references: [id])
+  projects           Project[]
+}
+
+model Bid {
+  id        String    @id @default(cuid())
+  pitchText String
+  amount    Int
+  status    BidStatus @default(PENDING)
+  briefId   String
+  creatorId String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  brief     Brief     @relation(fields: [briefId], references: [id])
+  creator   User      @relation("CreatorBids", fields: [creatorId], references: [id])
+}
+
+model Project {
+  id               String           @id @default(cuid())
+  videoUrl         String?
+  submissionStatus SubmissionStatus @default(PENDING)
+  briefId          String
+  brandId          String
+  creatorId        String
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  brand            User             @relation("BrandProjects", fields: [brandId], references: [id])
+  brief            Brief            @relation(fields: [briefId], references: [id])
+  creator          User             @relation("CreatorProjects", fields: [creatorId], references: [id])
 }
 
 enum Role {
@@ -34,75 +141,4 @@ enum SubmissionStatus {
   PENDING
   APPROVED
   REVISIONS
-}
-
-model User {
-  id       String @id @default(cuid())
-  clerkId  String @unique
-  email    String @unique
-  role     Role
-  credits  Int    @default(0)
-  earnings Int    @default(0)
-
-  briefsAsBrand     Brief[]   @relation("BrandBriefs")
-  bidsAsCreator     Bid[]     @relation("CreatorBids")
-  projectsAsBrand   Project[] @relation("BrandProjects")
-  projectsAsCreator Project[] @relation("CreatorProjects")
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Brief {
-  id                 String      @id @default(cuid())
-  title              String
-  productDescription String
-  reelScript         String      @default("")
-  hook1              String
-  hook2              String
-  hook3              String
-  status             BriefStatus @default(OPEN)
-
-  brandId String
-  brand   User   @relation("BrandBriefs", fields: [brandId], references: [id])
-
-  bids     Bid[]
-  projects Project[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Bid {
-  id        String    @id @default(cuid())
-  pitchText String
-  amount    Int
-  status    BidStatus @default(PENDING)
-
-  briefId String
-  brief   Brief  @relation(fields: [briefId], references: [id])
-
-  creatorId String
-  creator   User   @relation("CreatorBids", fields: [creatorId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Project {
-  id               String           @id @default(cuid())
-  videoUrl         String?
-  submissionStatus SubmissionStatus @default(PENDING)
-
-  briefId String
-  brief   Brief  @relation(fields: [briefId], references: [id])
-
-  brandId String
-  brand   User   @relation("BrandProjects", fields: [brandId], references: [id])
-
-  creatorId String
-  creator   User   @relation("CreatorProjects", fields: [creatorId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }

@@ -1,16 +1,17 @@
-import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { BriefList } from "@/components/brand/BriefList";
+import { getAuthSession } from "@/lib/auth-session";
 
 export default async function ExplorePage() {
-  const { userId } = await auth();
+  const session = await getAuthSession();
+  const authUserId = session?.user.id;
 
   let userRole: string | undefined;
 
-  if (userId) {
+  if (authUserId) {
     const user = await prisma.user.findUnique({
       where: {
-        clerkId: userId,
+        authUserId,
       },
       select: {
         role: true,

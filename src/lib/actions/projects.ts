@@ -1,18 +1,19 @@
 "use server";
 
-import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
+import { getAuthSession } from "@/lib/auth-session";
 
 export async function acceptBid(bidId: string) {
-  const { userId } = await auth();
+  const session = await getAuthSession();
+  const authUserId = session?.user.id;
 
-  if (!userId) {
+  if (!authUserId) {
     throw new Error("Unauthorized");
   }
 
   const brandUser = await prisma.user.findUnique({
     where: {
-      clerkId: userId,
+      authUserId,
     },
     select: {
       id: true,

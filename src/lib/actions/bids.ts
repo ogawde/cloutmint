@@ -1,7 +1,7 @@
 "use server";
 
-import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
+import { getAuthSession } from "@/lib/auth-session";
 
 type CreateBidInput = {
   briefId: string;
@@ -12,15 +12,16 @@ type CreateBidInput = {
 export async function createBid(input: CreateBidInput) {
   const { briefId, amount, pitchText } = input;
 
-  const { userId } = await auth();
+  const session = await getAuthSession();
+  const authUserId = session?.user.id;
 
-  if (!userId) {
+  if (!authUserId) {
     throw new Error("Unauthorized");
   }
 
   const creator = await prisma.user.findUnique({
     where: {
-      clerkId: userId,
+      authUserId,
     },
     select: {
       id: true,

@@ -1,12 +1,14 @@
 "use server";
 
-import { auth, currentUser } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
+import { getAuthSession } from "@/lib/auth-session";
 
 export async function updateUserRole(role: "BRAND" | "CREATOR") {
-  const { userId } = await auth();
+  const session = await getAuthSession();
+  const authUserId = session?.user.id;
+  const email = session?.user.email;
 
-  if (!userId) {
+  if (!authUserId) {
     throw new Error("Unauthorized");
   }
 
@@ -15,20 +17,17 @@ export async function updateUserRole(role: "BRAND" | "CREATOR") {
   }
 
   const existingUser = await prisma.user.findUnique({
-    where: { clerkId: userId },
+    where: { authUserId },
   });
 
   if (!existingUser) {
-    const user = await currentUser();
-    const email = user?.primaryEmailAddress?.emailAddress;
-
     if (!email) {
       throw new Error("Email not found");
     }
 
     await prisma.user.create({
       data: {
-        clerkId: userId,
+        authUserId,
         email,
         role,
         credits: 100,
@@ -39,7 +38,7 @@ export async function updateUserRole(role: "BRAND" | "CREATOR") {
   }
 
   await prisma.user.update({
-    where: { clerkId: userId },
+    where: { authUserId },
     data: {
       role,
     },

@@ -2,7 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { generateHooks } from "@/lib/ai";
-import { auth } from "@clerk/nextjs/server";
+import { getAuthSession } from "@/lib/auth-session";
 
 type CreateBriefInput = {
   title: string;
@@ -12,13 +12,14 @@ type CreateBriefInput = {
 export async function createBrief(input: CreateBriefInput) {
   const { title, productDescription } = input;
 
-  const { userId } = await auth();
-  if (!userId) {
+  const session = await getAuthSession();
+  const authUserId = session?.user.id;
+  if (!authUserId) {
     throw new Error("Unauthorized");
   }
 
   const brandUser = await prisma.user.findUnique({
-    where: { clerkId: userId },
+    where: { authUserId },
     select: { id: true, role: true },
   });
 

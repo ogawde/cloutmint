@@ -1,19 +1,20 @@
 "use server";
 
-import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { handleProjectPayment } from "@/lib/actions/economy";
+import { getAuthSession } from "@/lib/auth-session";
 
 export async function submitWork(projectId: string, videoUrl: string) {
-  const { userId } = await auth();
+  const session = await getAuthSession();
+  const authUserId = session?.user.id;
 
-  if (!userId) {
+  if (!authUserId) {
     throw new Error("Unauthorized");
   }
 
   const user = await prisma.user.findUnique({
     where: {
-      clerkId: userId,
+      authUserId,
     },
     select: {
       id: true,
@@ -50,15 +51,16 @@ export async function submitWork(projectId: string, videoUrl: string) {
 }
 
 export async function approveWork(projectId: string) {
-  const { userId } = await auth();
+  const session = await getAuthSession();
+  const authUserId = session?.user.id;
 
-  if (!userId) {
+  if (!authUserId) {
     throw new Error("Unauthorized");
   }
 
   const user = await prisma.user.findUnique({
     where: {
-      clerkId: userId,
+      authUserId,
     },
     select: {
       id: true,

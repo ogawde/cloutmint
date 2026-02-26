@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { ClerkProvider, SignedIn, SignedOut, UserButton, SignInButton } from "@clerk/nextjs";
-import { auth } from "@clerk/nextjs/server";
 import { prisma } from "@/lib/prisma";
 import { Geist, Geist_Mono } from "next/font/google";
 import { PageTransition } from "@/components/layout/PageTransition";
+import { AuthControls } from "@/components/auth/AuthControls";
+import { getAuthSession } from "@/lib/auth-session";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -26,16 +26,17 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { userId } = await auth();
+  const session = await getAuthSession();
+  const authUserId = session?.user.id;
 
   let role: "BRAND" | "CREATOR" | null = null;
   let credits = 0;
   let earnings = 0;
 
-  if (userId) {
+  if (authUserId) {
     const user = await prisma.user.findUnique({
       where: {
-        clerkId: userId,
+        authUserId,
       },
       select: {
         role: true,
@@ -52,41 +53,34 @@ export default async function RootLayout({
   }
 
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          <header className="border-b border-zinc-800 bg-zinc-950/80 backdrop-blur-sm">
-            <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
-              <span className="text-sm font-semibold tracking-tight text-emerald-400">
-                CloutMint
-              </span>
-              <div className="flex items-center gap-4">
-                {role === "BRAND" && (
-                  <span className="text-xs font-medium text-zinc-300">
-                    Credits:{" "}
-                    <span className="text-emerald-400">{credits}</span>
-                  </span>
-                )}
-                {role === "CREATOR" && (
-                  <span className="text-xs font-medium text-zinc-300">
-                    Earnings:{" "}
-                    <span className="text-emerald-400">${earnings}</span>
-                  </span>
-                )}
-                <SignedOut>
-                  <SignInButton />
-                </SignedOut>
-                <SignedIn>
-                  <UserButton />
-                </SignedIn>
-              </div>
+    <html lang="en">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        <header className="border-b border-zinc-800 bg-zinc-950/80 backdrop-blur-sm">
+          <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
+            <span className="text-sm font-semibold tracking-tight text-emerald-400">
+              CloutMint
+            </span>
+            <div className="flex items-center gap-4">
+              {role === "BRAND" && (
+                <span className="text-xs font-medium text-zinc-300">
+                  Credits:{" "}
+                  <span className="text-emerald-400">{credits}</span>
+                </span>
+              )}
+              {role === "CREATOR" && (
+                <span className="text-xs font-medium text-zinc-300">
+                  Earnings:{" "}
+                  <span className="text-emerald-400">${earnings}</span>
+                </span>
+              )}
+              <AuthControls />
             </div>
-          </header>
-          <PageTransition>{children}</PageTransition>
-        </body>
-      </html>
-    </ClerkProvider>
+          </div>
+        </header>
+        <PageTransition>{children}</PageTransition>
+      </body>
+    </html>
   );
 }
