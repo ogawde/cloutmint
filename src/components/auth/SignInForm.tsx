@@ -71,7 +71,7 @@ export function SignInForm() {
         />
       </div>
 
-      {errorMessage && <p className="text-sm text-red-400">{errorMessage}</p>}
+      {errorMessage && <p className="text-sm text-zinc-300">{errorMessage}</p>}
 
       <Button type="submit" className="w-full" disabled={isLoading}>
         {isLoading ? "Signing in..." : "Sign in"}
@@ -83,7 +83,7 @@ export function SignInForm() {
 
       <p className="text-center text-sm text-zinc-400">
         No account yet?{" "}
-        <Link href="/sign-up" className="text-emerald-400 hover:underline">
+        <Link href="/sign-up" className="text-zinc-100 underline-offset-4 hover:underline">
           Create one
         </Link>
       </p>

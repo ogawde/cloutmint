@@ -18,6 +18,8 @@
 .DS_Store
 *.pem
 .agents
+.cursor
+
 skills-lock.json
 
 # debug

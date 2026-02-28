@@ -50,10 +50,10 @@ export function ProjectCard({ project, userRole }: ProjectCardProps) {
   };
 
   return (
-    <Card className="bg-zinc-900/60 border-zinc-800 text-zinc-50">
+    <Card className="border-zinc-800 bg-zinc-900/60 text-zinc-50">
       <CardHeader className="space-y-2">
         <CardTitle className="flex items-center justify-between gap-4">
-          <span className="text-lg font-semibold text-emerald-400">
+          <span className="text-lg font-semibold tracking-tight text-zinc-100">
             {project.brief.title}
           </span>
           <span className="rounded-full border border-zinc-700 px-3 py-1 text-xs uppercase tracking-wide text-zinc-300">
@@ -75,7 +75,7 @@ export function ProjectCard({ project, userRole }: ProjectCardProps) {
             <Button
               type="button"
               size="sm"
-              className="mt-2 bg-emerald-600 hover:bg-emerald-500 text-xs"
+              className="mt-2 text-xs"
               onClick={handleCopyScript}
             >
               Copy Script
@@ -91,11 +91,11 @@ export function ProjectCard({ project, userRole }: ProjectCardProps) {
               placeholder="Paste your video URL"
               value={videoUrl}
               onChange={(event) => setVideoUrl(event.target.value)}
-              className="bg-zinc-950 border-zinc-800 text-zinc-50"
+              className="bg-zinc-950"
             />
             <Button
               type="button"
-              className="mt-2 bg-emerald-600 hover:bg-emerald-500 text-white"
+              className="mt-2"
               disabled={isPending}
               onClick={handleSubmitWork}
             >
@@ -113,7 +113,7 @@ export function ProjectCard({ project, userRole }: ProjectCardProps) {
                 href={project.videoUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="text-sm text-emerald-400 underline underline-offset-4"
+                className="text-sm text-zinc-100 underline underline-offset-4"
               >
                 View submitted video
               </a>
@@ -124,7 +124,7 @@ export function ProjectCard({ project, userRole }: ProjectCardProps) {
             )}
             <Button
               type="button"
-              className="mt-2 bg-emerald-600 hover:bg-emerald-500 text-white"
+              className="mt-2"
               disabled={isPending}
               onClick={handleApprove}
             >

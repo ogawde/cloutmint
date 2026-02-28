@@ -18,16 +18,16 @@ export function RoleSelection() {
   };
 
   return (
-    <main className="min-h-screen bg-zinc-950 text-zinc-50 flex items-center justify-center">
-      <div className="max-w-3xl w-full px-4 space-y-8">
+    <main className="flex min-h-screen items-center justify-center bg-zinc-950 text-zinc-50">
+      <div className="w-full max-w-3xl space-y-8 px-4">
         <div className="space-y-2 text-center">
-          <h1 className="text-3xl font-semibold tracking-tight">Choose your role</h1>
-          <p className="text-zinc-400 text-sm md:text-base">
+          <h1 className="text-3xl font-semibold tracking-tight text-zinc-100">Choose your role</h1>
+          <p className="text-sm leading-6 text-zinc-400 md:text-base">
             Tell us who you are so we can tailor the dashboard to your workflow.
           </p>
         </div>
         <div className="grid gap-6 md:grid-cols-2">
-          <Card className="bg-zinc-900 border-zinc-800 hover:border-emerald-500 transition-colors h-full">
+          <Card className="h-full border-zinc-800 bg-zinc-900 transition-colors hover:border-zinc-600">
             <CardHeader>
               <CardTitle className="text-xl">I am a Brand</CardTitle>
               <CardDescription>Post briefs, mint hooks, and collaborate with creators.</CardDescription>
@@ -36,7 +36,7 @@ export function RoleSelection() {
               <Button
                 type="button"
                 variant="outline"
-                className="w-full border-zinc-700 hover:border-emerald-500 hover:text-emerald-400 bg-zinc-900"
+                className="w-full bg-zinc-900"
                 disabled={isPending}
                 onClick={() => handleSelect("BRAND")}
               >
@@ -44,7 +44,7 @@ export function RoleSelection() {
               </Button>
             </CardContent>
           </Card>
-          <Card className="bg-zinc-900 border-zinc-800 hover:border-emerald-500 transition-colors h-full">
+          <Card className="h-full border-zinc-800 bg-zinc-900 transition-colors hover:border-zinc-600">
             <CardHeader>
               <CardTitle className="text-xl">I am a Creator</CardTitle>
               <CardDescription>Discover briefs, submit ideas, and grow with brands.</CardDescription>
@@ -53,7 +53,7 @@ export function RoleSelection() {
               <Button
                 type="button"
                 variant="outline"
-                className="w-full border-zinc-700 hover:border-emerald-500 hover:text-emerald-400 bg-zinc-900"
+                className="w-full bg-zinc-900"
                 disabled={isPending}
                 onClick={() => handleSelect("CREATOR")}
               >

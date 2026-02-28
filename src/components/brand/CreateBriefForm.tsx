@@ -41,14 +41,14 @@ export function CreateBriefForm() {
 
   return (
     <div className="relative">
-      <Card className="max-w-xl mx-auto bg-zinc-950 border-zinc-800 text-zinc-50">
+      <Card className="mx-auto max-w-xl border-zinc-800 bg-zinc-900/80 text-zinc-50">
         <CardHeader>
-          <CardTitle className="text-xl font-semibold">
+          <CardTitle className="text-xl font-semibold tracking-tight text-zinc-100">
             Create a New Brief
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-2">
               <Label htmlFor="title">Title</Label>
               <Input
@@ -56,7 +56,7 @@ export function CreateBriefForm() {
                 value={title}
                 onChange={(event) => setTitle(event.target.value)}
                 placeholder="Give your brief a title"
-                className="bg-zinc-900 border-zinc-700 text-zinc-50 placeholder:text-zinc-500"
+                className="bg-zinc-950/70"
                 disabled={isPending}
               />
             </div>
@@ -67,14 +67,14 @@ export function CreateBriefForm() {
                 value={productDescription}
                 onChange={(event) => setProductDescription(event.target.value)}
                 placeholder="Describe your product so we can mint compelling hooks"
-                className="bg-zinc-900 border-zinc-700 text-zinc-50 placeholder:text-zinc-500 min-h-[140px]"
+                className="min-h-[140px] bg-zinc-950/70"
                 disabled={isPending}
               />
             </div>
             <Button
               type="submit"
               disabled={isPending}
-              className="w-full bg-emerald-600 hover:bg-emerald-500 text-white disabled:opacity-70"
+              className="w-full disabled:opacity-70"
             >
               {isPending ? "Minting Hooks..." : "Create Brief"}
             </Button>
@@ -84,7 +84,7 @@ export function CreateBriefForm() {
       {isPending && (
         <div className="absolute inset-0 z-10 flex items-center justify-center rounded-xl bg-zinc-950/80">
           <div className="flex flex-col items-center gap-3">
-            <div className="h-10 w-10 rounded-full border-2 border-emerald-500/40 border-t-emerald-500 animate-spin" />
+            <div className="h-10 w-10 animate-spin rounded-full border-2 border-zinc-600 border-t-zinc-200" />
             <p className="text-sm font-medium text-zinc-200 animate-pulse">
               Minting your Strategy...
             </p>

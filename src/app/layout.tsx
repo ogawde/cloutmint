@@ -53,26 +53,26 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <header className="border-b border-zinc-800 bg-zinc-950/80 backdrop-blur-sm">
-          <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
-            <span className="text-sm font-semibold tracking-tight text-emerald-400">
+        <header className="border-b border-zinc-800 bg-zinc-950/90 backdrop-blur-sm">
+          <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
+            <span className="text-base font-semibold tracking-tight text-zinc-100">
               CloutMint
             </span>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-5">
               {role === "BRAND" && (
-                <span className="text-xs font-medium text-zinc-300">
+                <span className="text-sm font-medium text-zinc-300">
                   Credits:{" "}
-                  <span className="text-emerald-400">{credits}</span>
+                  <span className="text-zinc-100">{credits}</span>
                 </span>
               )}
               {role === "CREATOR" && (
-                <span className="text-xs font-medium text-zinc-300">
+                <span className="text-sm font-medium text-zinc-300">
                   Earnings:{" "}
-                  <span className="text-emerald-400">${earnings}</span>
+                  <span className="text-zinc-100">${earnings}</span>
                 </span>
               )}
               <AuthControls />

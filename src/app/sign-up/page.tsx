@@ -12,9 +12,9 @@ export default async function SignUpPage() {
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-zinc-950 px-4 text-zinc-50">
-      <Card className="w-full max-w-md border-zinc-800 bg-zinc-900/80">
+      <Card className="w-full max-w-md border-zinc-800 bg-zinc-900/85 shadow-sm">
         <CardHeader>
-          <CardTitle className="text-2xl">Create account</CardTitle>
+          <CardTitle className="text-2xl tracking-tight text-zinc-100">Create account</CardTitle>
         </CardHeader>
         <CardContent>
           <SignUpForm />

@@ -36,7 +36,7 @@ export function BriefBids({ bids }: BriefBidsProps) {
   };
 
   return (
-    <div className="mt-4 max-h-48 space-y-3 overflow-y-auto rounded-md border border-zinc-800 bg-zinc-950/60 p-3">
+    <div className="mt-4 max-h-48 space-y-3 overflow-y-auto rounded-lg border border-zinc-800 bg-zinc-950/60 p-3">
       {bids.map((bid) => (
         <Card
           key={bid.id}
@@ -44,13 +44,13 @@ export function BriefBids({ bids }: BriefBidsProps) {
         >
           <p className="mb-2 text-zinc-300">{bid.pitchText}</p>
           <div className="flex items-center justify-between">
-            <span className="font-semibold text-emerald-400">
+            <span className="font-semibold text-zinc-100">
               ${bid.amount}
             </span>
             <Button
               type="button"
               size="sm"
-              className="bg-emerald-600 text-xs text-white hover:bg-emerald-500"
+              className="text-xs"
               disabled={pendingId === bid.id}
               onClick={() => handleAccept(bid.id)}
             >

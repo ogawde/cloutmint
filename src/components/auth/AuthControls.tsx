@@ -8,16 +8,16 @@ export function AuthControls() {
   const { data: session, isPending } = authClient.useSession();
 
   if (isPending) {
-    return <span className="text-xs text-zinc-500">Loading...</span>;
+    return <span className="text-sm text-zinc-500">Loading...</span>;
   }
 
   if (!session?.user) {
     return (
-      <div className="flex items-center gap-2">
-        <Button asChild size="sm" variant="outline" className="border-zinc-700">
+      <div className="flex items-center gap-2.5">
+        <Button asChild size="sm" variant="outline">
           <Link href="/sign-in">Sign in</Link>
         </Button>
-        <Button asChild size="sm" className="bg-emerald-500 text-black hover:bg-emerald-400">
+        <Button asChild size="sm">
           <Link href="/sign-up">Sign up</Link>
         </Button>
       </div>
@@ -26,11 +26,10 @@ export function AuthControls() {
 
   return (
     <div className="flex items-center gap-3">
-      <span className="hidden text-xs text-zinc-400 sm:inline">{session.user.email}</span>
+      <span className="hidden text-sm text-zinc-400 sm:inline">{session.user.email}</span>
       <Button
         size="sm"
         variant="outline"
-        className="border-zinc-700"
         onClick={() => authClient.signOut()}
       >
         Sign out

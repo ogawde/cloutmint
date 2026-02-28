@@ -92,10 +92,10 @@ function BriefCard({ brief, userRole }: BriefCardProps) {
   };
 
   return (
-    <Card className="bg-zinc-900/50 border-zinc-800 text-zinc-50 flex flex-col">
+    <Card className="flex flex-col border-zinc-800 bg-zinc-900/60 text-zinc-50">
       <CardHeader className="space-y-2">
         <div className="flex items-start justify-between gap-2">
-          <CardTitle className="text-emerald-400 font-semibold text-lg">
+          <CardTitle className="text-lg font-semibold tracking-tight text-zinc-100">
             {brief.title}
           </CardTitle>
           <Badge variant="outline" className="border-zinc-700 text-xs">
@@ -137,7 +137,7 @@ function BriefCard({ brief, userRole }: BriefCardProps) {
               <button
                 type="button"
                 onClick={() => setIsExpanded((value) => !value)}
-                className="text-xs font-medium text-emerald-400 hover:text-emerald-300"
+                className="text-xs font-medium text-zinc-200 hover:text-zinc-50"
               >
                 {isExpanded ? "See Less" : "See More"}
               </button>
@@ -145,7 +145,7 @@ function BriefCard({ brief, userRole }: BriefCardProps) {
             <button
               type="button"
               onClick={() => navigator.clipboard.writeText(brief.reelScript)}
-              className="text-xs font-medium text-emerald-400 hover:text-emerald-300"
+              className="text-xs font-medium text-zinc-200 hover:text-zinc-50"
             >
               Copy Script
             </button>
@@ -154,18 +154,18 @@ function BriefCard({ brief, userRole }: BriefCardProps) {
                 <Button
                   type="button"
                   size="sm"
-                  className="ml-auto bg-emerald-600 hover:bg-emerald-500 text-xs"
+                  className="ml-auto text-xs"
                   onClick={() => setIsDialogOpen(true)}
                 >
                   Submit Pitch
                 </Button>
-                <DialogContent className="bg-zinc-950 border-zinc-800 text-zinc-50">
+                <DialogContent className="border-zinc-800 bg-zinc-950 text-zinc-50">
                   <DialogHeader>
                     <DialogTitle className="text-lg">
                       Submit Pitch
                     </DialogTitle>
                   </DialogHeader>
-                  <form onSubmit={handleSubmitPitch} className="space-y-4 mt-4">
+                  <form onSubmit={handleSubmitPitch} className="mt-4 space-y-4">
                     <div className="space-y-2">
                       <label
                         htmlFor="amount"
@@ -179,7 +179,7 @@ function BriefCard({ brief, userRole }: BriefCardProps) {
                         min={0}
                         value={amount}
                         onChange={(event) => setAmount(event.target.value)}
-                        className="bg-zinc-900 border-zinc-700 text-zinc-50"
+                        className="bg-zinc-900"
                       />
                     </div>
                     <div className="space-y-2">
@@ -193,14 +193,14 @@ function BriefCard({ brief, userRole }: BriefCardProps) {
                         id="pitchText"
                         value={pitchText}
                         onChange={(event) => setPitchText(event.target.value)}
-                        className="bg-zinc-900 border-zinc-700 text-zinc-50 min-h-[120px]"
+                        className="min-h-[120px] bg-zinc-900"
                       />
                     </div>
                     <div className="flex justify-end gap-3 pt-2">
                       <Button
                         type="button"
                         variant="outline"
-                        className="border-zinc-700 text-zinc-200 hover:bg-zinc-900"
+                        className="text-zinc-200"
                         onClick={() => setIsDialogOpen(false)}
                         disabled={isSubmitting}
                       >
@@ -208,7 +208,6 @@ function BriefCard({ brief, userRole }: BriefCardProps) {
                       </Button>
                       <Button
                         type="submit"
-                        className="bg-emerald-600 hover:bg-emerald-500 text-white"
                         disabled={isSubmitting}
                       >
                         {isSubmitting ? "Submitting..." : "Submit Pitch"}
