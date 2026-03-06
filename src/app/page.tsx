@@ -1,8 +1,7 @@
 import { prisma } from "@/lib/prisma";
-import { CreateBriefForm } from "@/components/brand/CreateBriefForm";
-import { BriefList } from "@/components/brand/BriefList";
 import { RoleSelection } from "@/components/auth/RoleSelection";
 import { getAuthSession } from "@/lib/auth-session";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
@@ -46,20 +45,7 @@ export default async function Home() {
   }
 
   if (user.role === "BRAND") {
-    const briefs = await prisma.brief.findMany({
-      where: { brandId: user.id },
-      include: { bids: true },
-      orderBy: { createdAt: "desc" },
-    });
-
-    return (
-      <main className="min-h-screen bg-zinc-950 text-zinc-50">
-        <div className="max-w-5xl mx-auto px-4 py-12 space-y-10">
-          <CreateBriefForm />
-          <BriefList briefs={briefs} userRole={user.role} />
-        </div>
-      </main>
-    );
+    redirect("/brand/projects");
   }
 
   if (user.role === "CREATOR") {

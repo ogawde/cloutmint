@@ -3,21 +3,12 @@ import { prisma } from "@/lib/prisma";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { getAuthSession } from "@/lib/auth-session";
 
-export default async function ProjectsPage() {
+export default async function BrandProjectsPage() {
   const session = await getAuthSession();
   const authUserId = session?.user.id;
 
   if (!authUserId) {
-    return (
-      <main className="min-h-screen bg-zinc-950 text-zinc-50">
-        <div className="mx-auto max-w-5xl px-4 py-12">
-          <h1 className="text-2xl font-semibold tracking-tight text-zinc-100">Live Projects</h1>
-          <p className="mt-3 text-sm leading-6 text-zinc-400">
-            Please sign in to view your active collaborations.
-          </p>
-        </div>
-      </main>
-    );
+    redirect("/auth/sign-in");
   }
 
   const user = await prisma.user.findUnique({
@@ -31,28 +22,16 @@ export default async function ProjectsPage() {
   });
 
   if (!user) {
-    return (
-      <main className="min-h-screen bg-zinc-950 text-zinc-50">
-        <div className="mx-auto max-w-5xl px-4 py-12">
-          <h1 className="text-2xl font-semibold tracking-tight text-zinc-100">Live Projects</h1>
-          <p className="mt-3 text-sm leading-6 text-zinc-400">
-            No user record found for this account.
-          </p>
-        </div>
-      </main>
-    );
+    redirect("/");
   }
 
-  if (user.role === "BRAND") {
-    redirect("/brand/projects");
+  if (user.role !== "BRAND") {
+    redirect("/");
   }
 
   const projects = await prisma.project.findMany({
     where: {
-      OR: [
-        { brandId: user.id },
-        { creatorId: user.id },
-      ],
+      brandId: user.id,
     },
     include: {
       brief: {
@@ -71,14 +50,14 @@ export default async function ProjectsPage() {
     <main className="min-h-screen bg-zinc-950 text-zinc-50">
       <div className="mx-auto max-w-5xl space-y-8 px-4 py-12">
         <section className="rounded-xl border border-zinc-800 bg-zinc-900/70 px-6 py-5">
-          <h1 className="text-3xl font-semibold tracking-tight text-zinc-100">Live Projects</h1>
+          <h1 className="text-3xl font-semibold tracking-tight text-zinc-100">Brand Projects</h1>
           <p className="mt-2 text-sm leading-6 text-zinc-400">
-            Track submissions, review deliverables, and move collaborations forward.
+            Review active collaborations, track progress, and manage deliverables.
           </p>
         </section>
         {projects.length === 0 ? (
           <p className="text-sm leading-6 text-zinc-400">
-            You have no active projects yet. Accept a bid or get hired to see projects here.
+            You have no active projects yet. Post a brief and accept a bid to start your first project.
           </p>
         ) : (
           <div className="space-y-4">
@@ -86,7 +65,7 @@ export default async function ProjectsPage() {
               <ProjectCard
                 key={project.id}
                 project={project}
-                userRole={user.role}
+                userRole={user.role as "BRAND" | "CREATOR"}
               />
             ))}
           </div>
@@ -95,4 +74,3 @@ export default async function ProjectsPage() {
     </main>
   );
 }
-

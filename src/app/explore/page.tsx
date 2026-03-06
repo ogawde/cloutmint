@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { BriefList } from "@/components/brand/BriefList";
 import { getAuthSession } from "@/lib/auth-session";
@@ -17,6 +18,10 @@ export default async function ExplorePage() {
         role: true,
       },
     });
+
+    if (user?.role === "BRAND") {
+      redirect("/brand/projects");
+    }
 
     userRole = user?.role ?? undefined;
   }
