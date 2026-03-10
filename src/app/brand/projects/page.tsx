@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { ProjectCard } from "@/components/projects/ProjectCard";
 import { getAuthSession } from "@/lib/auth-session";
+import { RoleNav } from "@/components/navigation/RoleNav";
 
 export default async function BrandProjectsPage() {
   const session = await getAuthSession();
@@ -49,6 +50,7 @@ export default async function BrandProjectsPage() {
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-50">
       <div className="mx-auto max-w-5xl space-y-8 px-4 py-12">
+        <RoleNav role="BRAND" activeHref="/brand/projects" />
         <section className="rounded-xl border border-zinc-800 bg-zinc-900/70 px-6 py-5">
           <h1 className="text-3xl font-semibold tracking-tight text-zinc-100">Brand Projects</h1>
           <p className="mt-2 text-sm leading-6 text-zinc-400">

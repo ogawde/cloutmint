@@ -49,16 +49,7 @@ export default async function Home() {
   }
 
   if (user.role === "CREATOR") {
-    return (
-      <main className="min-h-screen bg-zinc-950 text-zinc-50">
-        <div className="mx-auto max-w-5xl px-4 py-12">
-          <h1 className="mb-3 text-2xl font-semibold tracking-tight text-zinc-100">Creator Feed</h1>
-          <p className="text-sm leading-6 text-zinc-400">
-            Your personalized creator feed will appear here soon.
-          </p>
-        </div>
-      </main>
-    );
+    redirect("/creator/explore");
   }
 
   return <RoleSelection />;

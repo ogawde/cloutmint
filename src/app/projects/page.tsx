@@ -47,6 +47,10 @@ export default async function ProjectsPage() {
     redirect("/brand/projects");
   }
 
+  if (user.role === "CREATOR") {
+    redirect("/creator/dashboard");
+  }
+
   const projects = await prisma.project.findMany({
     where: {
       OR: [
@@ -86,7 +90,7 @@ export default async function ProjectsPage() {
               <ProjectCard
                 key={project.id}
                 project={project}
-                userRole={user.role}
+                userRole={user.role as "BRAND" | "CREATOR"}
               />
             ))}
           </div>

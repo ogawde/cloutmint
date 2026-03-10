@@ -23,6 +23,10 @@ export default async function ExplorePage() {
       redirect("/brand/projects");
     }
 
+    if (user?.role === "CREATOR") {
+      redirect("/creator/explore");
+    }
+
     userRole = user?.role ?? undefined;
   }
 
