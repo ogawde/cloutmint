@@ -6104,6 +6104,9 @@ export namespace Prisma {
     id: string | null
     authUserId: string | null
     email: string | null
+    displayName: string | null
+    bio: string | null
+    logoUrl: string | null
     role: $Enums.Role | null
     credits: number | null
     earnings: number | null
@@ -6115,6 +6118,9 @@ export namespace Prisma {
     id: string | null
     authUserId: string | null
     email: string | null
+    displayName: string | null
+    bio: string | null
+    logoUrl: string | null
     role: $Enums.Role | null
     credits: number | null
     earnings: number | null
@@ -6126,6 +6132,9 @@ export namespace Prisma {
     id: number
     authUserId: number
     email: number
+    displayName: number
+    bio: number
+    logoUrl: number
     role: number
     credits: number
     earnings: number
@@ -6149,6 +6158,9 @@ export namespace Prisma {
     id?: true
     authUserId?: true
     email?: true
+    displayName?: true
+    bio?: true
+    logoUrl?: true
     role?: true
     credits?: true
     earnings?: true
@@ -6160,6 +6172,9 @@ export namespace Prisma {
     id?: true
     authUserId?: true
     email?: true
+    displayName?: true
+    bio?: true
+    logoUrl?: true
     role?: true
     credits?: true
     earnings?: true
@@ -6171,6 +6186,9 @@ export namespace Prisma {
     id?: true
     authUserId?: true
     email?: true
+    displayName?: true
+    bio?: true
+    logoUrl?: true
     role?: true
     credits?: true
     earnings?: true
@@ -6269,6 +6287,9 @@ export namespace Prisma {
     id: string
     authUserId: string
     email: string
+    displayName: string | null
+    bio: string | null
+    logoUrl: string | null
     role: $Enums.Role | null
     credits: number
     earnings: number
@@ -6299,6 +6320,9 @@ export namespace Prisma {
     id?: boolean
     authUserId?: boolean
     email?: boolean
+    displayName?: boolean
+    bio?: boolean
+    logoUrl?: boolean
     role?: boolean
     credits?: boolean
     earnings?: boolean
@@ -6315,6 +6339,9 @@ export namespace Prisma {
     id?: boolean
     authUserId?: boolean
     email?: boolean
+    displayName?: boolean
+    bio?: boolean
+    logoUrl?: boolean
     role?: boolean
     credits?: boolean
     earnings?: boolean
@@ -6326,6 +6353,9 @@ export namespace Prisma {
     id?: boolean
     authUserId?: boolean
     email?: boolean
+    displayName?: boolean
+    bio?: boolean
+    logoUrl?: boolean
     role?: boolean
     credits?: boolean
     earnings?: boolean
@@ -6337,6 +6367,9 @@ export namespace Prisma {
     id?: boolean
     authUserId?: boolean
     email?: boolean
+    displayName?: boolean
+    bio?: boolean
+    logoUrl?: boolean
     role?: boolean
     credits?: boolean
     earnings?: boolean
@@ -6344,7 +6377,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "authUserId" | "email" | "role" | "credits" | "earnings" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "authUserId" | "email" | "displayName" | "bio" | "logoUrl" | "role" | "credits" | "earnings" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bidsAsCreator?: boolean | User$bidsAsCreatorArgs<ExtArgs>
     briefsAsBrand?: boolean | User$briefsAsBrandArgs<ExtArgs>
@@ -6367,6 +6400,9 @@ export namespace Prisma {
       id: string
       authUserId: string
       email: string
+      displayName: string | null
+      bio: string | null
+      logoUrl: string | null
       role: $Enums.Role | null
       credits: number
       earnings: number
@@ -6802,6 +6838,9 @@ export namespace Prisma {
     readonly id: FieldRef<"User", 'String'>
     readonly authUserId: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
+    readonly displayName: FieldRef<"User", 'String'>
+    readonly bio: FieldRef<"User", 'String'>
+    readonly logoUrl: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'Role'>
     readonly credits: FieldRef<"User", 'Int'>
     readonly earnings: FieldRef<"User", 'Int'>
@@ -10831,6 +10870,9 @@ export namespace Prisma {
     id: 'id',
     authUserId: 'authUserId',
     email: 'email',
+    displayName: 'displayName',
+    bio: 'bio',
+    logoUrl: 'logoUrl',
     role: 'role',
     credits: 'credits',
     earnings: 'earnings',
@@ -11335,6 +11377,9 @@ export namespace Prisma {
     id?: StringFilter<"User"> | string
     authUserId?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
+    displayName?: StringNullableFilter<"User"> | string | null
+    bio?: StringNullableFilter<"User"> | string | null
+    logoUrl?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleNullableFilter<"User"> | $Enums.Role | null
     credits?: IntFilter<"User"> | number
     earnings?: IntFilter<"User"> | number
@@ -11350,6 +11395,9 @@ export namespace Prisma {
     id?: SortOrder
     authUserId?: SortOrder
     email?: SortOrder
+    displayName?: SortOrderInput | SortOrder
+    bio?: SortOrderInput | SortOrder
+    logoUrl?: SortOrderInput | SortOrder
     role?: SortOrderInput | SortOrder
     credits?: SortOrder
     earnings?: SortOrder
@@ -11368,6 +11416,9 @@ export namespace Prisma {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
+    displayName?: StringNullableFilter<"User"> | string | null
+    bio?: StringNullableFilter<"User"> | string | null
+    logoUrl?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleNullableFilter<"User"> | $Enums.Role | null
     credits?: IntFilter<"User"> | number
     earnings?: IntFilter<"User"> | number
@@ -11383,6 +11434,9 @@ export namespace Prisma {
     id?: SortOrder
     authUserId?: SortOrder
     email?: SortOrder
+    displayName?: SortOrderInput | SortOrder
+    bio?: SortOrderInput | SortOrder
+    logoUrl?: SortOrderInput | SortOrder
     role?: SortOrderInput | SortOrder
     credits?: SortOrder
     earnings?: SortOrder
@@ -11402,6 +11456,9 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"User"> | string
     authUserId?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
+    displayName?: StringNullableWithAggregatesFilter<"User"> | string | null
+    bio?: StringNullableWithAggregatesFilter<"User"> | string | null
+    logoUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: EnumRoleNullableWithAggregatesFilter<"User"> | $Enums.Role | null
     credits?: IntWithAggregatesFilter<"User"> | number
     earnings?: IntWithAggregatesFilter<"User"> | number
@@ -11983,6 +12040,9 @@ export namespace Prisma {
     id?: string
     authUserId: string
     email: string
+    displayName?: string | null
+    bio?: string | null
+    logoUrl?: string | null
     role?: $Enums.Role | null
     credits?: number
     earnings?: number
@@ -11998,6 +12058,9 @@ export namespace Prisma {
     id?: string
     authUserId: string
     email: string
+    displayName?: string | null
+    bio?: string | null
+    logoUrl?: string | null
     role?: $Enums.Role | null
     credits?: number
     earnings?: number
@@ -12013,6 +12076,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     authUserId?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     credits?: IntFieldUpdateOperationsInput | number
     earnings?: IntFieldUpdateOperationsInput | number
@@ -12028,6 +12094,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     authUserId?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     credits?: IntFieldUpdateOperationsInput | number
     earnings?: IntFieldUpdateOperationsInput | number
@@ -12043,6 +12112,9 @@ export namespace Prisma {
     id?: string
     authUserId: string
     email: string
+    displayName?: string | null
+    bio?: string | null
+    logoUrl?: string | null
     role?: $Enums.Role | null
     credits?: number
     earnings?: number
@@ -12054,6 +12126,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     authUserId?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     credits?: IntFieldUpdateOperationsInput | number
     earnings?: IntFieldUpdateOperationsInput | number
@@ -12065,6 +12140,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     authUserId?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     credits?: IntFieldUpdateOperationsInput | number
     earnings?: IntFieldUpdateOperationsInput | number
@@ -12680,6 +12758,9 @@ export namespace Prisma {
     id?: SortOrder
     authUserId?: SortOrder
     email?: SortOrder
+    displayName?: SortOrder
+    bio?: SortOrder
+    logoUrl?: SortOrder
     role?: SortOrder
     credits?: SortOrder
     earnings?: SortOrder
@@ -12696,6 +12777,9 @@ export namespace Prisma {
     id?: SortOrder
     authUserId?: SortOrder
     email?: SortOrder
+    displayName?: SortOrder
+    bio?: SortOrder
+    logoUrl?: SortOrder
     role?: SortOrder
     credits?: SortOrder
     earnings?: SortOrder
@@ -12707,6 +12791,9 @@ export namespace Prisma {
     id?: SortOrder
     authUserId?: SortOrder
     email?: SortOrder
+    displayName?: SortOrder
+    bio?: SortOrder
+    logoUrl?: SortOrder
     role?: SortOrder
     credits?: SortOrder
     earnings?: SortOrder
@@ -14184,6 +14271,9 @@ export namespace Prisma {
     id?: string
     authUserId: string
     email: string
+    displayName?: string | null
+    bio?: string | null
+    logoUrl?: string | null
     role?: $Enums.Role | null
     credits?: number
     earnings?: number
@@ -14198,6 +14288,9 @@ export namespace Prisma {
     id?: string
     authUserId: string
     email: string
+    displayName?: string | null
+    bio?: string | null
+    logoUrl?: string | null
     role?: $Enums.Role | null
     credits?: number
     earnings?: number
@@ -14274,6 +14367,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     authUserId?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     credits?: IntFieldUpdateOperationsInput | number
     earnings?: IntFieldUpdateOperationsInput | number
@@ -14288,6 +14384,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     authUserId?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     credits?: IntFieldUpdateOperationsInput | number
     earnings?: IntFieldUpdateOperationsInput | number
@@ -14353,6 +14452,9 @@ export namespace Prisma {
     id?: string
     authUserId: string
     email: string
+    displayName?: string | null
+    bio?: string | null
+    logoUrl?: string | null
     role?: $Enums.Role | null
     credits?: number
     earnings?: number
@@ -14367,6 +14469,9 @@ export namespace Prisma {
     id?: string
     authUserId: string
     email: string
+    displayName?: string | null
+    bio?: string | null
+    logoUrl?: string | null
     role?: $Enums.Role | null
     credits?: number
     earnings?: number
@@ -14438,6 +14543,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     authUserId?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     credits?: IntFieldUpdateOperationsInput | number
     earnings?: IntFieldUpdateOperationsInput | number
@@ -14452,6 +14560,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     authUserId?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     credits?: IntFieldUpdateOperationsInput | number
     earnings?: IntFieldUpdateOperationsInput | number
@@ -14466,6 +14577,9 @@ export namespace Prisma {
     id?: string
     authUserId: string
     email: string
+    displayName?: string | null
+    bio?: string | null
+    logoUrl?: string | null
     role?: $Enums.Role | null
     credits?: number
     earnings?: number
@@ -14480,6 +14594,9 @@ export namespace Prisma {
     id?: string
     authUserId: string
     email: string
+    displayName?: string | null
+    bio?: string | null
+    logoUrl?: string | null
     role?: $Enums.Role | null
     credits?: number
     earnings?: number
@@ -14534,6 +14651,9 @@ export namespace Prisma {
     id?: string
     authUserId: string
     email: string
+    displayName?: string | null
+    bio?: string | null
+    logoUrl?: string | null
     role?: $Enums.Role | null
     credits?: number
     earnings?: number
@@ -14548,6 +14668,9 @@ export namespace Prisma {
     id?: string
     authUserId: string
     email: string
+    displayName?: string | null
+    bio?: string | null
+    logoUrl?: string | null
     role?: $Enums.Role | null
     credits?: number
     earnings?: number
@@ -14578,6 +14701,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     authUserId?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     credits?: IntFieldUpdateOperationsInput | number
     earnings?: IntFieldUpdateOperationsInput | number
@@ -14592,6 +14718,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     authUserId?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     credits?: IntFieldUpdateOperationsInput | number
     earnings?: IntFieldUpdateOperationsInput | number
@@ -14658,6 +14787,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     authUserId?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     credits?: IntFieldUpdateOperationsInput | number
     earnings?: IntFieldUpdateOperationsInput | number
@@ -14672,6 +14804,9 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     authUserId?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    displayName?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     credits?: IntFieldUpdateOperationsInput | number
     earnings?: IntFieldUpdateOperationsInput | number
