@@ -18,7 +18,23 @@ type HooksResponse = {
 
 export async function generateHooks(
   productDescription: string,
+  options?: {
+    previousScript?: string;
+    regenAttempt?: number;
+  },
 ): Promise<HooksResponse> {
+  const regenAttempt = options?.regenAttempt ?? 1;
+  const isRegeneration = regenAttempt > 1;
+  const regenerationInstruction = isRegeneration
+    ? `
+REGENERATION REQUEST:
+- This is attempt ${regenAttempt}.
+- The previously generated script was not good enough.
+- Generate a completely new script with a fresh angle and structure.
+- Avoid repeating sentence openings and sequence flow from the previous script.
+`
+    : "";
+
   const completion = await openai.chat.completions.create({
     model: "qwen/qwen-2.5-72b-instruct",
     messages: [
@@ -69,11 +85,14 @@ OUTPUT RULES:
   "hook3": "string",
   "reelScript": "string"
 }
+${regenerationInstruction}
 `
       },
       {
         role: "user",
-        content: productDescription,
+        content: isRegeneration
+          ? `Product description:\n${productDescription}\n\nPrevious rejected script:\n${options?.previousScript ?? ""}\n\nGenerate a brand new script and hooks.`
+          : productDescription,
       },
     ],
     response_format: { type: "json_object" },
