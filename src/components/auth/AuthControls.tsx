@@ -1,24 +1,20 @@
-"use client";
-
 import Link from "next/link";
-import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
+import { SignOutActionButton } from "@/components/auth/SignOutActionButton";
 
-export function AuthControls() {
-  const { data: session, isPending } = authClient.useSession();
+type AuthControlsProps = {
+  userEmail?: string | null;
+};
 
-  if (isPending) {
-    return <span className="text-sm text-zinc-500">Loading...</span>;
-  }
-
-  if (!session?.user) {
+export function AuthControls({ userEmail }: AuthControlsProps) {
+  if (!userEmail) {
     return (
       <div className="flex items-center gap-2.5">
         <Button asChild size="sm" variant="outline">
-          <Link href="/sign-in">Sign in</Link>
+          <Link href="/auth/sign-in">Sign in</Link>
         </Button>
         <Button asChild size="sm">
-          <Link href="/sign-up">Sign up</Link>
+          <Link href="/auth/sign-up">Sign up</Link>
         </Button>
       </div>
     );
@@ -26,14 +22,8 @@ export function AuthControls() {
 
   return (
     <div className="flex items-center gap-3">
-      <span className="hidden text-sm text-zinc-400 sm:inline">{session.user.email}</span>
-      <Button
-        size="sm"
-        variant="outline"
-        onClick={() => authClient.signOut()}
-      >
-        Sign out
-      </Button>
+      <span className="hidden text-sm text-zinc-400 sm:inline">{userEmail}</span>
+      <SignOutActionButton />
     </div>
   );
 }

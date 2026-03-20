@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { prisma } from "@/lib/prisma";
 import { Geist, Geist_Mono } from "next/font/google";
 import { PageTransition } from "@/components/layout/PageTransition";
 import { AuthControls } from "@/components/auth/AuthControls";
+import { HeaderRoleNav } from "@/components/navigation/HeaderRoleNav";
 import { getAuthSession } from "@/lib/auth-session";
+import { getViewerMeta } from "@/lib/server/get-viewer-meta";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -28,29 +29,7 @@ export default async function RootLayout({
 }>) {
   const session = await getAuthSession();
   const authUserId = session?.user.id;
-
-  let role: "BRAND" | "CREATOR" | null = null;
-  let credits = 0;
-  let earnings = 0;
-
-  if (authUserId) {
-    const user = await prisma.user.findUnique({
-      where: {
-        authUserId,
-      },
-      select: {
-        role: true,
-        credits: true,
-        earnings: true,
-      },
-    });
-
-    if (user) {
-      role = user.role;
-      credits = user.credits;
-      earnings = user.earnings;
-    }
-  }
+  const { role, credits, earnings } = await getViewerMeta(authUserId);
 
   return (
     <html lang="en" className="dark">
@@ -63,6 +42,9 @@ export default async function RootLayout({
               CloutMint
             </span>
             <div className="flex items-center gap-5">
+              {(role === "BRAND" || role === "CREATOR") && (
+                <HeaderRoleNav role={role} />
+              )}
               {role === "BRAND" && (
                 <span className="text-sm font-medium text-zinc-300">
                   Credits:{" "}
@@ -75,7 +57,7 @@ export default async function RootLayout({
                   <span className="text-zinc-100">${earnings}</span>
                 </span>
               )}
-              <AuthControls />
+              <AuthControls userEmail={session?.user.email ?? null} />
             </div>
           </div>
         </header>
