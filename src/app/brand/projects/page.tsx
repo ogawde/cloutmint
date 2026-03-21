@@ -1,77 +1,68 @@
-import { redirect } from "next/navigation";
+import { Suspense } from "react";
 import { prisma } from "@/lib/prisma";
-import { ProjectCard } from "@/components/projects/ProjectCard";
-import { getAuthSession } from "@/lib/auth-session";
-import { RoleNav } from "@/components/navigation/RoleNav";
+import { BrandProjectsView } from "@/components/brand/BrandProjectsView";
+import { getRequiredBrandUser } from "@/lib/server/get-required-brand-user";
 
-export default async function BrandProjectsPage() {
-  const session = await getAuthSession();
-  const authUserId = session?.user.id;
+const INITIAL_BRIEF_LIMIT = 8;
 
-  if (!authUserId) {
-    redirect("/auth/sign-in");
-  }
-
-  const user = await prisma.user.findUnique({
+async function BrandProjectsSection({ brandId }: { brandId: string }) {
+  const briefs = await prisma.brief.findMany({
     where: {
-      authUserId,
+      brandId,
     },
     select: {
       id: true,
-      role: true,
-    },
-  });
-
-  if (!user) {
-    redirect("/");
-  }
-
-  if (user.role !== "BRAND") {
-    redirect("/");
-  }
-
-  const projects = await prisma.project.findMany({
-    where: {
-      brandId: user.id,
-    },
-    include: {
-      brief: {
+      createdAt: true,
+      title: true,
+      reelScript: true,
+      status: true,
+      _count: {
         select: {
-          title: true,
-          reelScript: true,
+          bids: true,
+        },
+      },
+      projects: {
+        select: {
+          id: true,
+          submissionStatus: true,
+          createdAt: true,
         },
       },
     },
     orderBy: {
       createdAt: "desc",
     },
+    take: INITIAL_BRIEF_LIMIT,
   });
+
+  return <BrandProjectsView briefs={briefs} />;
+}
+
+function BrandProjectsSkeleton() {
+  return (
+    <div className="space-y-8">
+      <div className="h-48 animate-pulse rounded-xl border border-zinc-800 bg-zinc-900/70" />
+      <div className="h-48 animate-pulse rounded-xl border border-zinc-800 bg-zinc-900/70" />
+      <div className="h-48 animate-pulse rounded-xl border border-zinc-800 bg-zinc-900/70" />
+    </div>
+  );
+}
+
+export default async function BrandProjectsPage() {
+  const brandUser = await getRequiredBrandUser();
 
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-50">
       <div className="mx-auto max-w-5xl space-y-8 px-4 py-12">
-        <RoleNav role="BRAND" activeHref="/brand/projects" />
         <section className="rounded-xl border border-zinc-800 bg-zinc-900/70 px-6 py-5">
           <h1 className="text-3xl font-semibold tracking-tight text-zinc-100">Brand Projects</h1>
           <p className="mt-2 text-sm leading-6 text-zinc-400">
-            Review active collaborations, track progress, and manage deliverables.
+            Review active, completed, and archived projects from your briefs.
           </p>
         </section>
-        {projects.length === 0 ? (
-          <p className="text-sm leading-6 text-zinc-400">
-            You have no active projects yet. Post a brief and accept a bid to start your first project.
-          </p>
-        ) : (
-          <div className="space-y-4">
-            {projects.map((project) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                userRole={user.role as "BRAND" | "CREATOR"}
-              />
-            ))}
-          </div>
-        )}
+        <Suspense fallback={<BrandProjectsSkeleton />}>
+          <BrandProjectsSection brandId={brandUser.id} />
+        </Suspense>
       </div>
     </main>
   );
