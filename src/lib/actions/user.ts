@@ -4,6 +4,11 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { getAuthSession } from "@/lib/auth-session";
 
+function getOptionalField(formData: FormData, key: string) {
+  const value = String(formData.get(key) ?? "").trim();
+  return value || null;
+}
+
 export async function updateUserRole(role: "BRAND" | "CREATOR") {
   const session = await getAuthSession();
   const authUserId = session?.user.id;
@@ -54,9 +59,9 @@ export async function updateBrandProfile(formData: FormData) {
     throw new Error("Unauthorized");
   }
 
-  const displayName = String(formData.get("displayName") ?? "").trim();
-  const bio = String(formData.get("bio") ?? "").trim();
-  const logoUrl = String(formData.get("logoUrl") ?? "").trim();
+  const displayName = getOptionalField(formData, "displayName");
+  const bio = getOptionalField(formData, "bio");
+  const logoUrl = getOptionalField(formData, "logoUrl");
 
   const user = await prisma.user.findUnique({
     where: { authUserId },
@@ -70,12 +75,45 @@ export async function updateBrandProfile(formData: FormData) {
   await prisma.user.update({
     where: { authUserId },
     data: {
-      displayName: displayName || null,
-      bio: bio || null,
-      logoUrl: logoUrl || null,
+      displayName,
+      bio,
+      logoUrl,
     },
   });
 
   revalidatePath("/brand/profile");
+}
+
+export async function updateCreatorProfile(formData: FormData) {
+  const session = await getAuthSession();
+  const authUserId = session?.user.id;
+
+  if (!authUserId) {
+    throw new Error("Unauthorized");
+  }
+
+  const user = await prisma.user.findUnique({
+    where: { authUserId },
+    select: { role: true },
+  });
+
+  if (!user || user.role !== "CREATOR") {
+    throw new Error("Forbidden");
+  }
+
+  await prisma.user.update({
+    where: { authUserId },
+    data: {
+      displayName: getOptionalField(formData, "displayName"),
+      bio: getOptionalField(formData, "bio"),
+      instagramUrl: getOptionalField(formData, "instagramUrl"),
+      youtubeUrl: getOptionalField(formData, "youtubeUrl"),
+      tiktokUrl: getOptionalField(formData, "tiktokUrl"),
+      twitterUrl: getOptionalField(formData, "twitterUrl"),
+      snapchatUrl: getOptionalField(formData, "snapchatUrl"),
+    },
+  });
+
+  revalidatePath("/creator/dashboard");
 }
 
