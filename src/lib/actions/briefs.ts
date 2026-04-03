@@ -8,6 +8,10 @@ type CreateBriefInput = {
   title: string;
   productDescription: string;
   reelScript: string;
+  targetPlatforms: string[];
+  productUrl: string;
+  minBidAmount: number;
+  maxBidAmount: number;
   hook1?: string;
   hook2?: string;
   hook3?: string;
@@ -48,6 +52,10 @@ export async function createBrief(input: CreateBriefInput) {
     title,
     productDescription,
     reelScript,
+    targetPlatforms,
+    productUrl,
+    minBidAmount,
+    maxBidAmount,
     hook1: inputHook1,
     hook2: inputHook2,
     hook3: inputHook3,
@@ -66,6 +74,22 @@ export async function createBrief(input: CreateBriefInput) {
 
   if (!brandUser || brandUser.role !== "BRAND") {
     throw new Error("Only authorized brands can create briefs.");
+  }
+
+  if (!productUrl.trim()) {
+    throw new Error("Product URL is required.");
+  }
+
+  if (!Number.isFinite(minBidAmount) || !Number.isFinite(maxBidAmount)) {
+    throw new Error("Bid range is required.");
+  }
+
+  if (!Array.isArray(targetPlatforms) || targetPlatforms.length === 0) {
+    throw new Error("Select at least one target platform.");
+  }
+
+  if (minBidAmount < 0 || maxBidAmount < 0 || minBidAmount > maxBidAmount) {
+    throw new Error("Invalid bid range.");
   }
 
   let hook1 = inputHook1?.trim() ?? "";
@@ -88,6 +112,10 @@ export async function createBrief(input: CreateBriefInput) {
       hook1,
       hook2,
       hook3,
+      productUrl: productUrl.trim(),
+      targetPlatforms: targetPlatforms.map((platform) => platform.trim()).filter(Boolean),
+      minBidAmount: Math.floor(minBidAmount),
+      maxBidAmount: Math.floor(maxBidAmount),
       reelScript: finalScript,
       brand: { connect: { id: brandUser.id } },
     },
