@@ -13,6 +13,7 @@ type NavItem = {
 };
 
 const BRAND_ITEMS: NavItem[] = [
+  { href: "/brand/briefs", label: "Briefs" },
   { href: "/brand/projects", label: "Projects" },
   { href: "/brand/new", label: "New Brief" },
   { href: "/brand/profile", label: "Profile" },

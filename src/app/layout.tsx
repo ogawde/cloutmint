@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { PageTransition } from "@/components/layout/PageTransition";
 import { AuthControls } from "@/components/auth/AuthControls";
 import { HeaderRoleNav } from "@/components/navigation/HeaderRoleNav";
+import { Toaster } from "@/components/ui/sonner";
 import { getAuthSession } from "@/lib/auth-session";
 import { getViewerMeta } from "@/lib/server/get-viewer-meta";
 import "./globals.css";
@@ -62,6 +63,7 @@ export default async function RootLayout({
           </div>
         </header>
         <PageTransition>{children}</PageTransition>
+        <Toaster richColors position="top-right" />
       </body>
     </html>
   );

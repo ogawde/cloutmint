@@ -64,7 +64,7 @@ export function ProjectCard({ project, userRole }: ProjectCardProps) {
       <CardContent className="space-y-4">
         <div className="space-y-2">
           <p className="text-xs uppercase tracking-wide text-zinc-500">
-            AI Reel Script
+            AI Video Script
           </p>
           <div className="rounded-md bg-zinc-950/70 border border-zinc-800 px-3 py-2 max-h-48 overflow-y-auto">
             <p className="text-sm text-zinc-100 whitespace-pre-wrap">
