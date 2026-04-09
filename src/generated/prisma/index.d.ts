@@ -6107,6 +6107,11 @@ export namespace Prisma {
     displayName: string | null
     bio: string | null
     logoUrl: string | null
+    instagramUrl: string | null
+    youtubeUrl: string | null
+    tiktokUrl: string | null
+    twitterUrl: string | null
+    snapchatUrl: string | null
     role: $Enums.Role | null
     credits: number | null
     earnings: number | null
@@ -6121,6 +6126,11 @@ export namespace Prisma {
     displayName: string | null
     bio: string | null
     logoUrl: string | null
+    instagramUrl: string | null
+    youtubeUrl: string | null
+    tiktokUrl: string | null
+    twitterUrl: string | null
+    snapchatUrl: string | null
     role: $Enums.Role | null
     credits: number | null
     earnings: number | null
@@ -6135,6 +6145,11 @@ export namespace Prisma {
     displayName: number
     bio: number
     logoUrl: number
+    instagramUrl: number
+    youtubeUrl: number
+    tiktokUrl: number
+    twitterUrl: number
+    snapchatUrl: number
     role: number
     credits: number
     earnings: number
@@ -6161,6 +6176,11 @@ export namespace Prisma {
     displayName?: true
     bio?: true
     logoUrl?: true
+    instagramUrl?: true
+    youtubeUrl?: true
+    tiktokUrl?: true
+    twitterUrl?: true
+    snapchatUrl?: true
     role?: true
     credits?: true
     earnings?: true
@@ -6175,6 +6195,11 @@ export namespace Prisma {
     displayName?: true
     bio?: true
     logoUrl?: true
+    instagramUrl?: true
+    youtubeUrl?: true
+    tiktokUrl?: true
+    twitterUrl?: true
+    snapchatUrl?: true
     role?: true
     credits?: true
     earnings?: true
@@ -6189,6 +6214,11 @@ export namespace Prisma {
     displayName?: true
     bio?: true
     logoUrl?: true
+    instagramUrl?: true
+    youtubeUrl?: true
+    tiktokUrl?: true
+    twitterUrl?: true
+    snapchatUrl?: true
     role?: true
     credits?: true
     earnings?: true
@@ -6290,6 +6320,11 @@ export namespace Prisma {
     displayName: string | null
     bio: string | null
     logoUrl: string | null
+    instagramUrl: string | null
+    youtubeUrl: string | null
+    tiktokUrl: string | null
+    twitterUrl: string | null
+    snapchatUrl: string | null
     role: $Enums.Role | null
     credits: number
     earnings: number
@@ -6323,6 +6358,11 @@ export namespace Prisma {
     displayName?: boolean
     bio?: boolean
     logoUrl?: boolean
+    instagramUrl?: boolean
+    youtubeUrl?: boolean
+    tiktokUrl?: boolean
+    twitterUrl?: boolean
+    snapchatUrl?: boolean
     role?: boolean
     credits?: boolean
     earnings?: boolean
@@ -6342,6 +6382,11 @@ export namespace Prisma {
     displayName?: boolean
     bio?: boolean
     logoUrl?: boolean
+    instagramUrl?: boolean
+    youtubeUrl?: boolean
+    tiktokUrl?: boolean
+    twitterUrl?: boolean
+    snapchatUrl?: boolean
     role?: boolean
     credits?: boolean
     earnings?: boolean
@@ -6356,6 +6401,11 @@ export namespace Prisma {
     displayName?: boolean
     bio?: boolean
     logoUrl?: boolean
+    instagramUrl?: boolean
+    youtubeUrl?: boolean
+    tiktokUrl?: boolean
+    twitterUrl?: boolean
+    snapchatUrl?: boolean
     role?: boolean
     credits?: boolean
     earnings?: boolean
@@ -6370,6 +6420,11 @@ export namespace Prisma {
     displayName?: boolean
     bio?: boolean
     logoUrl?: boolean
+    instagramUrl?: boolean
+    youtubeUrl?: boolean
+    tiktokUrl?: boolean
+    twitterUrl?: boolean
+    snapchatUrl?: boolean
     role?: boolean
     credits?: boolean
     earnings?: boolean
@@ -6377,7 +6432,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "authUserId" | "email" | "displayName" | "bio" | "logoUrl" | "role" | "credits" | "earnings" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "authUserId" | "email" | "displayName" | "bio" | "logoUrl" | "instagramUrl" | "youtubeUrl" | "tiktokUrl" | "twitterUrl" | "snapchatUrl" | "role" | "credits" | "earnings" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bidsAsCreator?: boolean | User$bidsAsCreatorArgs<ExtArgs>
     briefsAsBrand?: boolean | User$briefsAsBrandArgs<ExtArgs>
@@ -6403,6 +6458,11 @@ export namespace Prisma {
       displayName: string | null
       bio: string | null
       logoUrl: string | null
+      instagramUrl: string | null
+      youtubeUrl: string | null
+      tiktokUrl: string | null
+      twitterUrl: string | null
+      snapchatUrl: string | null
       role: $Enums.Role | null
       credits: number
       earnings: number
@@ -6841,6 +6901,11 @@ export namespace Prisma {
     readonly displayName: FieldRef<"User", 'String'>
     readonly bio: FieldRef<"User", 'String'>
     readonly logoUrl: FieldRef<"User", 'String'>
+    readonly instagramUrl: FieldRef<"User", 'String'>
+    readonly youtubeUrl: FieldRef<"User", 'String'>
+    readonly tiktokUrl: FieldRef<"User", 'String'>
+    readonly twitterUrl: FieldRef<"User", 'String'>
+    readonly snapchatUrl: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'Role'>
     readonly credits: FieldRef<"User", 'Int'>
     readonly earnings: FieldRef<"User", 'Int'>
@@ -7354,8 +7419,20 @@ export namespace Prisma {
 
   export type AggregateBrief = {
     _count: BriefCountAggregateOutputType | null
+    _avg: BriefAvgAggregateOutputType | null
+    _sum: BriefSumAggregateOutputType | null
     _min: BriefMinAggregateOutputType | null
     _max: BriefMaxAggregateOutputType | null
+  }
+
+  export type BriefAvgAggregateOutputType = {
+    minBidAmount: number | null
+    maxBidAmount: number | null
+  }
+
+  export type BriefSumAggregateOutputType = {
+    minBidAmount: number | null
+    maxBidAmount: number | null
   }
 
   export type BriefMinAggregateOutputType = {
@@ -7363,6 +7440,9 @@ export namespace Prisma {
     title: string | null
     productDescription: string | null
     reelScript: string | null
+    productUrl: string | null
+    minBidAmount: number | null
+    maxBidAmount: number | null
     hook1: string | null
     hook2: string | null
     hook3: string | null
@@ -7377,6 +7457,9 @@ export namespace Prisma {
     title: string | null
     productDescription: string | null
     reelScript: string | null
+    productUrl: string | null
+    minBidAmount: number | null
+    maxBidAmount: number | null
     hook1: string | null
     hook2: string | null
     hook3: string | null
@@ -7391,6 +7474,10 @@ export namespace Prisma {
     title: number
     productDescription: number
     reelScript: number
+    targetPlatforms: number
+    productUrl: number
+    minBidAmount: number
+    maxBidAmount: number
     hook1: number
     hook2: number
     hook3: number
@@ -7402,11 +7489,24 @@ export namespace Prisma {
   }
 
 
+  export type BriefAvgAggregateInputType = {
+    minBidAmount?: true
+    maxBidAmount?: true
+  }
+
+  export type BriefSumAggregateInputType = {
+    minBidAmount?: true
+    maxBidAmount?: true
+  }
+
   export type BriefMinAggregateInputType = {
     id?: true
     title?: true
     productDescription?: true
     reelScript?: true
+    productUrl?: true
+    minBidAmount?: true
+    maxBidAmount?: true
     hook1?: true
     hook2?: true
     hook3?: true
@@ -7421,6 +7521,9 @@ export namespace Prisma {
     title?: true
     productDescription?: true
     reelScript?: true
+    productUrl?: true
+    minBidAmount?: true
+    maxBidAmount?: true
     hook1?: true
     hook2?: true
     hook3?: true
@@ -7435,6 +7538,10 @@ export namespace Prisma {
     title?: true
     productDescription?: true
     reelScript?: true
+    targetPlatforms?: true
+    productUrl?: true
+    minBidAmount?: true
+    maxBidAmount?: true
     hook1?: true
     hook2?: true
     hook3?: true
@@ -7483,6 +7590,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: BriefAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: BriefSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: BriefMinAggregateInputType
@@ -7513,6 +7632,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: BriefCountAggregateInputType | true
+    _avg?: BriefAvgAggregateInputType
+    _sum?: BriefSumAggregateInputType
     _min?: BriefMinAggregateInputType
     _max?: BriefMaxAggregateInputType
   }
@@ -7522,6 +7643,10 @@ export namespace Prisma {
     title: string
     productDescription: string
     reelScript: string
+    targetPlatforms: string[]
+    productUrl: string
+    minBidAmount: number
+    maxBidAmount: number
     hook1: string
     hook2: string
     hook3: string
@@ -7530,6 +7655,8 @@ export namespace Prisma {
     createdAt: Date
     updatedAt: Date
     _count: BriefCountAggregateOutputType | null
+    _avg: BriefAvgAggregateOutputType | null
+    _sum: BriefSumAggregateOutputType | null
     _min: BriefMinAggregateOutputType | null
     _max: BriefMaxAggregateOutputType | null
   }
@@ -7553,6 +7680,10 @@ export namespace Prisma {
     title?: boolean
     productDescription?: boolean
     reelScript?: boolean
+    targetPlatforms?: boolean
+    productUrl?: boolean
+    minBidAmount?: boolean
+    maxBidAmount?: boolean
     hook1?: boolean
     hook2?: boolean
     hook3?: boolean
@@ -7571,6 +7702,10 @@ export namespace Prisma {
     title?: boolean
     productDescription?: boolean
     reelScript?: boolean
+    targetPlatforms?: boolean
+    productUrl?: boolean
+    minBidAmount?: boolean
+    maxBidAmount?: boolean
     hook1?: boolean
     hook2?: boolean
     hook3?: boolean
@@ -7586,6 +7721,10 @@ export namespace Prisma {
     title?: boolean
     productDescription?: boolean
     reelScript?: boolean
+    targetPlatforms?: boolean
+    productUrl?: boolean
+    minBidAmount?: boolean
+    maxBidAmount?: boolean
     hook1?: boolean
     hook2?: boolean
     hook3?: boolean
@@ -7601,6 +7740,10 @@ export namespace Prisma {
     title?: boolean
     productDescription?: boolean
     reelScript?: boolean
+    targetPlatforms?: boolean
+    productUrl?: boolean
+    minBidAmount?: boolean
+    maxBidAmount?: boolean
     hook1?: boolean
     hook2?: boolean
     hook3?: boolean
@@ -7610,7 +7753,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type BriefOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "productDescription" | "reelScript" | "hook1" | "hook2" | "hook3" | "status" | "brandId" | "createdAt" | "updatedAt", ExtArgs["result"]["brief"]>
+  export type BriefOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "productDescription" | "reelScript" | "targetPlatforms" | "productUrl" | "minBidAmount" | "maxBidAmount" | "hook1" | "hook2" | "hook3" | "status" | "brandId" | "createdAt" | "updatedAt", ExtArgs["result"]["brief"]>
   export type BriefInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     bids?: boolean | Brief$bidsArgs<ExtArgs>
     brand?: boolean | UserDefaultArgs<ExtArgs>
@@ -7636,6 +7779,10 @@ export namespace Prisma {
       title: string
       productDescription: string
       reelScript: string
+      targetPlatforms: string[]
+      productUrl: string
+      minBidAmount: number
+      maxBidAmount: number
       hook1: string
       hook2: string
       hook3: string
@@ -8073,6 +8220,10 @@ export namespace Prisma {
     readonly title: FieldRef<"Brief", 'String'>
     readonly productDescription: FieldRef<"Brief", 'String'>
     readonly reelScript: FieldRef<"Brief", 'String'>
+    readonly targetPlatforms: FieldRef<"Brief", 'String[]'>
+    readonly productUrl: FieldRef<"Brief", 'String'>
+    readonly minBidAmount: FieldRef<"Brief", 'Int'>
+    readonly maxBidAmount: FieldRef<"Brief", 'Int'>
     readonly hook1: FieldRef<"Brief", 'String'>
     readonly hook2: FieldRef<"Brief", 'String'>
     readonly hook3: FieldRef<"Brief", 'String'>
@@ -10873,6 +11024,11 @@ export namespace Prisma {
     displayName: 'displayName',
     bio: 'bio',
     logoUrl: 'logoUrl',
+    instagramUrl: 'instagramUrl',
+    youtubeUrl: 'youtubeUrl',
+    tiktokUrl: 'tiktokUrl',
+    twitterUrl: 'twitterUrl',
+    snapchatUrl: 'snapchatUrl',
     role: 'role',
     credits: 'credits',
     earnings: 'earnings',
@@ -10888,6 +11044,10 @@ export namespace Prisma {
     title: 'title',
     productDescription: 'productDescription',
     reelScript: 'reelScript',
+    targetPlatforms: 'targetPlatforms',
+    productUrl: 'productUrl',
+    minBidAmount: 'minBidAmount',
+    maxBidAmount: 'maxBidAmount',
     hook1: 'hook1',
     hook2: 'hook2',
     hook3: 'hook3',
@@ -11380,6 +11540,11 @@ export namespace Prisma {
     displayName?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
     logoUrl?: StringNullableFilter<"User"> | string | null
+    instagramUrl?: StringNullableFilter<"User"> | string | null
+    youtubeUrl?: StringNullableFilter<"User"> | string | null
+    tiktokUrl?: StringNullableFilter<"User"> | string | null
+    twitterUrl?: StringNullableFilter<"User"> | string | null
+    snapchatUrl?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleNullableFilter<"User"> | $Enums.Role | null
     credits?: IntFilter<"User"> | number
     earnings?: IntFilter<"User"> | number
@@ -11398,6 +11563,11 @@ export namespace Prisma {
     displayName?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
     logoUrl?: SortOrderInput | SortOrder
+    instagramUrl?: SortOrderInput | SortOrder
+    youtubeUrl?: SortOrderInput | SortOrder
+    tiktokUrl?: SortOrderInput | SortOrder
+    twitterUrl?: SortOrderInput | SortOrder
+    snapchatUrl?: SortOrderInput | SortOrder
     role?: SortOrderInput | SortOrder
     credits?: SortOrder
     earnings?: SortOrder
@@ -11419,6 +11589,11 @@ export namespace Prisma {
     displayName?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
     logoUrl?: StringNullableFilter<"User"> | string | null
+    instagramUrl?: StringNullableFilter<"User"> | string | null
+    youtubeUrl?: StringNullableFilter<"User"> | string | null
+    tiktokUrl?: StringNullableFilter<"User"> | string | null
+    twitterUrl?: StringNullableFilter<"User"> | string | null
+    snapchatUrl?: StringNullableFilter<"User"> | string | null
     role?: EnumRoleNullableFilter<"User"> | $Enums.Role | null
     credits?: IntFilter<"User"> | number
     earnings?: IntFilter<"User"> | number
@@ -11437,6 +11612,11 @@ export namespace Prisma {
     displayName?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
     logoUrl?: SortOrderInput | SortOrder
+    instagramUrl?: SortOrderInput | SortOrder
+    youtubeUrl?: SortOrderInput | SortOrder
+    tiktokUrl?: SortOrderInput | SortOrder
+    twitterUrl?: SortOrderInput | SortOrder
+    snapchatUrl?: SortOrderInput | SortOrder
     role?: SortOrderInput | SortOrder
     credits?: SortOrder
     earnings?: SortOrder
@@ -11459,6 +11639,11 @@ export namespace Prisma {
     displayName?: StringNullableWithAggregatesFilter<"User"> | string | null
     bio?: StringNullableWithAggregatesFilter<"User"> | string | null
     logoUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
+    instagramUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
+    youtubeUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
+    tiktokUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
+    twitterUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
+    snapchatUrl?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: EnumRoleNullableWithAggregatesFilter<"User"> | $Enums.Role | null
     credits?: IntWithAggregatesFilter<"User"> | number
     earnings?: IntWithAggregatesFilter<"User"> | number
@@ -11474,6 +11659,10 @@ export namespace Prisma {
     title?: StringFilter<"Brief"> | string
     productDescription?: StringFilter<"Brief"> | string
     reelScript?: StringFilter<"Brief"> | string
+    targetPlatforms?: StringNullableListFilter<"Brief">
+    productUrl?: StringFilter<"Brief"> | string
+    minBidAmount?: IntFilter<"Brief"> | number
+    maxBidAmount?: IntFilter<"Brief"> | number
     hook1?: StringFilter<"Brief"> | string
     hook2?: StringFilter<"Brief"> | string
     hook3?: StringFilter<"Brief"> | string
@@ -11491,6 +11680,10 @@ export namespace Prisma {
     title?: SortOrder
     productDescription?: SortOrder
     reelScript?: SortOrder
+    targetPlatforms?: SortOrder
+    productUrl?: SortOrder
+    minBidAmount?: SortOrder
+    maxBidAmount?: SortOrder
     hook1?: SortOrder
     hook2?: SortOrder
     hook3?: SortOrder
@@ -11511,6 +11704,10 @@ export namespace Prisma {
     title?: StringFilter<"Brief"> | string
     productDescription?: StringFilter<"Brief"> | string
     reelScript?: StringFilter<"Brief"> | string
+    targetPlatforms?: StringNullableListFilter<"Brief">
+    productUrl?: StringFilter<"Brief"> | string
+    minBidAmount?: IntFilter<"Brief"> | number
+    maxBidAmount?: IntFilter<"Brief"> | number
     hook1?: StringFilter<"Brief"> | string
     hook2?: StringFilter<"Brief"> | string
     hook3?: StringFilter<"Brief"> | string
@@ -11528,6 +11725,10 @@ export namespace Prisma {
     title?: SortOrder
     productDescription?: SortOrder
     reelScript?: SortOrder
+    targetPlatforms?: SortOrder
+    productUrl?: SortOrder
+    minBidAmount?: SortOrder
+    maxBidAmount?: SortOrder
     hook1?: SortOrder
     hook2?: SortOrder
     hook3?: SortOrder
@@ -11536,8 +11737,10 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: BriefCountOrderByAggregateInput
+    _avg?: BriefAvgOrderByAggregateInput
     _max?: BriefMaxOrderByAggregateInput
     _min?: BriefMinOrderByAggregateInput
+    _sum?: BriefSumOrderByAggregateInput
   }
 
   export type BriefScalarWhereWithAggregatesInput = {
@@ -11548,6 +11751,10 @@ export namespace Prisma {
     title?: StringWithAggregatesFilter<"Brief"> | string
     productDescription?: StringWithAggregatesFilter<"Brief"> | string
     reelScript?: StringWithAggregatesFilter<"Brief"> | string
+    targetPlatforms?: StringNullableListFilter<"Brief">
+    productUrl?: StringWithAggregatesFilter<"Brief"> | string
+    minBidAmount?: IntWithAggregatesFilter<"Brief"> | number
+    maxBidAmount?: IntWithAggregatesFilter<"Brief"> | number
     hook1?: StringWithAggregatesFilter<"Brief"> | string
     hook2?: StringWithAggregatesFilter<"Brief"> | string
     hook3?: StringWithAggregatesFilter<"Brief"> | string
@@ -11588,6 +11795,7 @@ export namespace Prisma {
 
   export type BidWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    briefId_creatorId?: BidBriefIdCreatorIdCompoundUniqueInput
     AND?: BidWhereInput | BidWhereInput[]
     OR?: BidWhereInput[]
     NOT?: BidWhereInput | BidWhereInput[]
@@ -11600,7 +11808,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Bid"> | Date | string
     brief?: XOR<BriefScalarRelationFilter, BriefWhereInput>
     creator?: XOR<UserScalarRelationFilter, UserWhereInput>
-  }, "id">
+  }, "id" | "briefId_creatorId">
 
   export type BidOrderByWithAggregationInput = {
     id?: SortOrder
@@ -12043,6 +12251,11 @@ export namespace Prisma {
     displayName?: string | null
     bio?: string | null
     logoUrl?: string | null
+    instagramUrl?: string | null
+    youtubeUrl?: string | null
+    tiktokUrl?: string | null
+    twitterUrl?: string | null
+    snapchatUrl?: string | null
     role?: $Enums.Role | null
     credits?: number
     earnings?: number
@@ -12061,6 +12274,11 @@ export namespace Prisma {
     displayName?: string | null
     bio?: string | null
     logoUrl?: string | null
+    instagramUrl?: string | null
+    youtubeUrl?: string | null
+    tiktokUrl?: string | null
+    twitterUrl?: string | null
+    snapchatUrl?: string | null
     role?: $Enums.Role | null
     credits?: number
     earnings?: number
@@ -12079,6 +12297,11 @@ export namespace Prisma {
     displayName?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    tiktokUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    snapchatUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     credits?: IntFieldUpdateOperationsInput | number
     earnings?: IntFieldUpdateOperationsInput | number
@@ -12097,6 +12320,11 @@ export namespace Prisma {
     displayName?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    tiktokUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    snapchatUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     credits?: IntFieldUpdateOperationsInput | number
     earnings?: IntFieldUpdateOperationsInput | number
@@ -12115,6 +12343,11 @@ export namespace Prisma {
     displayName?: string | null
     bio?: string | null
     logoUrl?: string | null
+    instagramUrl?: string | null
+    youtubeUrl?: string | null
+    tiktokUrl?: string | null
+    twitterUrl?: string | null
+    snapchatUrl?: string | null
     role?: $Enums.Role | null
     credits?: number
     earnings?: number
@@ -12129,6 +12362,11 @@ export namespace Prisma {
     displayName?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    tiktokUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    snapchatUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     credits?: IntFieldUpdateOperationsInput | number
     earnings?: IntFieldUpdateOperationsInput | number
@@ -12143,6 +12381,11 @@ export namespace Prisma {
     displayName?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    tiktokUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    snapchatUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     credits?: IntFieldUpdateOperationsInput | number
     earnings?: IntFieldUpdateOperationsInput | number
@@ -12155,6 +12398,10 @@ export namespace Prisma {
     title: string
     productDescription: string
     reelScript?: string
+    targetPlatforms?: BriefCreatetargetPlatformsInput | string[]
+    productUrl: string
+    minBidAmount: number
+    maxBidAmount: number
     hook1: string
     hook2: string
     hook3: string
@@ -12171,6 +12418,10 @@ export namespace Prisma {
     title: string
     productDescription: string
     reelScript?: string
+    targetPlatforms?: BriefCreatetargetPlatformsInput | string[]
+    productUrl: string
+    minBidAmount: number
+    maxBidAmount: number
     hook1: string
     hook2: string
     hook3: string
@@ -12187,6 +12438,10 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     productDescription?: StringFieldUpdateOperationsInput | string
     reelScript?: StringFieldUpdateOperationsInput | string
+    targetPlatforms?: BriefUpdatetargetPlatformsInput | string[]
+    productUrl?: StringFieldUpdateOperationsInput | string
+    minBidAmount?: IntFieldUpdateOperationsInput | number
+    maxBidAmount?: IntFieldUpdateOperationsInput | number
     hook1?: StringFieldUpdateOperationsInput | string
     hook2?: StringFieldUpdateOperationsInput | string
     hook3?: StringFieldUpdateOperationsInput | string
@@ -12203,6 +12458,10 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     productDescription?: StringFieldUpdateOperationsInput | string
     reelScript?: StringFieldUpdateOperationsInput | string
+    targetPlatforms?: BriefUpdatetargetPlatformsInput | string[]
+    productUrl?: StringFieldUpdateOperationsInput | string
+    minBidAmount?: IntFieldUpdateOperationsInput | number
+    maxBidAmount?: IntFieldUpdateOperationsInput | number
     hook1?: StringFieldUpdateOperationsInput | string
     hook2?: StringFieldUpdateOperationsInput | string
     hook3?: StringFieldUpdateOperationsInput | string
@@ -12219,6 +12478,10 @@ export namespace Prisma {
     title: string
     productDescription: string
     reelScript?: string
+    targetPlatforms?: BriefCreatetargetPlatformsInput | string[]
+    productUrl: string
+    minBidAmount: number
+    maxBidAmount: number
     hook1: string
     hook2: string
     hook3: string
@@ -12233,6 +12496,10 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     productDescription?: StringFieldUpdateOperationsInput | string
     reelScript?: StringFieldUpdateOperationsInput | string
+    targetPlatforms?: BriefUpdatetargetPlatformsInput | string[]
+    productUrl?: StringFieldUpdateOperationsInput | string
+    minBidAmount?: IntFieldUpdateOperationsInput | number
+    maxBidAmount?: IntFieldUpdateOperationsInput | number
     hook1?: StringFieldUpdateOperationsInput | string
     hook2?: StringFieldUpdateOperationsInput | string
     hook3?: StringFieldUpdateOperationsInput | string
@@ -12246,6 +12513,10 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     productDescription?: StringFieldUpdateOperationsInput | string
     reelScript?: StringFieldUpdateOperationsInput | string
+    targetPlatforms?: BriefUpdatetargetPlatformsInput | string[]
+    productUrl?: StringFieldUpdateOperationsInput | string
+    minBidAmount?: IntFieldUpdateOperationsInput | number
+    maxBidAmount?: IntFieldUpdateOperationsInput | number
     hook1?: StringFieldUpdateOperationsInput | string
     hook2?: StringFieldUpdateOperationsInput | string
     hook3?: StringFieldUpdateOperationsInput | string
@@ -12761,6 +13032,11 @@ export namespace Prisma {
     displayName?: SortOrder
     bio?: SortOrder
     logoUrl?: SortOrder
+    instagramUrl?: SortOrder
+    youtubeUrl?: SortOrder
+    tiktokUrl?: SortOrder
+    twitterUrl?: SortOrder
+    snapchatUrl?: SortOrder
     role?: SortOrder
     credits?: SortOrder
     earnings?: SortOrder
@@ -12780,6 +13056,11 @@ export namespace Prisma {
     displayName?: SortOrder
     bio?: SortOrder
     logoUrl?: SortOrder
+    instagramUrl?: SortOrder
+    youtubeUrl?: SortOrder
+    tiktokUrl?: SortOrder
+    twitterUrl?: SortOrder
+    snapchatUrl?: SortOrder
     role?: SortOrder
     credits?: SortOrder
     earnings?: SortOrder
@@ -12794,6 +13075,11 @@ export namespace Prisma {
     displayName?: SortOrder
     bio?: SortOrder
     logoUrl?: SortOrder
+    instagramUrl?: SortOrder
+    youtubeUrl?: SortOrder
+    tiktokUrl?: SortOrder
+    twitterUrl?: SortOrder
+    snapchatUrl?: SortOrder
     role?: SortOrder
     credits?: SortOrder
     earnings?: SortOrder
@@ -12832,6 +13118,14 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type EnumBriefStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.BriefStatus | EnumBriefStatusFieldRefInput<$PrismaModel>
     in?: $Enums.BriefStatus[] | ListEnumBriefStatusFieldRefInput<$PrismaModel>
@@ -12849,6 +13143,10 @@ export namespace Prisma {
     title?: SortOrder
     productDescription?: SortOrder
     reelScript?: SortOrder
+    targetPlatforms?: SortOrder
+    productUrl?: SortOrder
+    minBidAmount?: SortOrder
+    maxBidAmount?: SortOrder
     hook1?: SortOrder
     hook2?: SortOrder
     hook3?: SortOrder
@@ -12858,11 +13156,19 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type BriefAvgOrderByAggregateInput = {
+    minBidAmount?: SortOrder
+    maxBidAmount?: SortOrder
+  }
+
   export type BriefMaxOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     productDescription?: SortOrder
     reelScript?: SortOrder
+    productUrl?: SortOrder
+    minBidAmount?: SortOrder
+    maxBidAmount?: SortOrder
     hook1?: SortOrder
     hook2?: SortOrder
     hook3?: SortOrder
@@ -12877,6 +13183,9 @@ export namespace Prisma {
     title?: SortOrder
     productDescription?: SortOrder
     reelScript?: SortOrder
+    productUrl?: SortOrder
+    minBidAmount?: SortOrder
+    maxBidAmount?: SortOrder
     hook1?: SortOrder
     hook2?: SortOrder
     hook3?: SortOrder
@@ -12884,6 +13193,11 @@ export namespace Prisma {
     brandId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type BriefSumOrderByAggregateInput = {
+    minBidAmount?: SortOrder
+    maxBidAmount?: SortOrder
   }
 
   export type EnumBriefStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -12906,6 +13220,11 @@ export namespace Prisma {
   export type BriefScalarRelationFilter = {
     is?: BriefWhereInput
     isNot?: BriefWhereInput
+  }
+
+  export type BidBriefIdCreatorIdCompoundUniqueInput = {
+    briefId: string
+    creatorId: string
   }
 
   export type BidCountOrderByAggregateInput = {
@@ -13321,6 +13640,10 @@ export namespace Prisma {
     deleteMany?: ProjectScalarWhereInput | ProjectScalarWhereInput[]
   }
 
+  export type BriefCreatetargetPlatformsInput = {
+    set: string[]
+  }
+
   export type BidCreateNestedManyWithoutBriefInput = {
     create?: XOR<BidCreateWithoutBriefInput, BidUncheckedCreateWithoutBriefInput> | BidCreateWithoutBriefInput[] | BidUncheckedCreateWithoutBriefInput[]
     connectOrCreate?: BidCreateOrConnectWithoutBriefInput | BidCreateOrConnectWithoutBriefInput[]
@@ -13353,6 +13676,11 @@ export namespace Prisma {
     connectOrCreate?: ProjectCreateOrConnectWithoutBriefInput | ProjectCreateOrConnectWithoutBriefInput[]
     createMany?: ProjectCreateManyBriefInputEnvelope
     connect?: ProjectWhereUniqueInput | ProjectWhereUniqueInput[]
+  }
+
+  export type BriefUpdatetargetPlatformsInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type EnumBriefStatusFieldUpdateOperationsInput = {
@@ -14033,6 +14361,10 @@ export namespace Prisma {
     title: string
     productDescription: string
     reelScript?: string
+    targetPlatforms?: BriefCreatetargetPlatformsInput | string[]
+    productUrl: string
+    minBidAmount: number
+    maxBidAmount: number
     hook1: string
     hook2: string
     hook3: string
@@ -14048,6 +14380,10 @@ export namespace Prisma {
     title: string
     productDescription: string
     reelScript?: string
+    targetPlatforms?: BriefCreatetargetPlatformsInput | string[]
+    productUrl: string
+    minBidAmount: number
+    maxBidAmount: number
     hook1: string
     hook2: string
     hook3: string
@@ -14182,6 +14518,10 @@ export namespace Prisma {
     title?: StringFilter<"Brief"> | string
     productDescription?: StringFilter<"Brief"> | string
     reelScript?: StringFilter<"Brief"> | string
+    targetPlatforms?: StringNullableListFilter<"Brief">
+    productUrl?: StringFilter<"Brief"> | string
+    minBidAmount?: IntFilter<"Brief"> | number
+    maxBidAmount?: IntFilter<"Brief"> | number
     hook1?: StringFilter<"Brief"> | string
     hook2?: StringFilter<"Brief"> | string
     hook3?: StringFilter<"Brief"> | string
@@ -14274,6 +14614,11 @@ export namespace Prisma {
     displayName?: string | null
     bio?: string | null
     logoUrl?: string | null
+    instagramUrl?: string | null
+    youtubeUrl?: string | null
+    tiktokUrl?: string | null
+    twitterUrl?: string | null
+    snapchatUrl?: string | null
     role?: $Enums.Role | null
     credits?: number
     earnings?: number
@@ -14291,6 +14636,11 @@ export namespace Prisma {
     displayName?: string | null
     bio?: string | null
     logoUrl?: string | null
+    instagramUrl?: string | null
+    youtubeUrl?: string | null
+    tiktokUrl?: string | null
+    twitterUrl?: string | null
+    snapchatUrl?: string | null
     role?: $Enums.Role | null
     credits?: number
     earnings?: number
@@ -14370,6 +14720,11 @@ export namespace Prisma {
     displayName?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    tiktokUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    snapchatUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     credits?: IntFieldUpdateOperationsInput | number
     earnings?: IntFieldUpdateOperationsInput | number
@@ -14387,6 +14742,11 @@ export namespace Prisma {
     displayName?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    tiktokUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    snapchatUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     credits?: IntFieldUpdateOperationsInput | number
     earnings?: IntFieldUpdateOperationsInput | number
@@ -14418,6 +14778,10 @@ export namespace Prisma {
     title: string
     productDescription: string
     reelScript?: string
+    targetPlatforms?: BriefCreatetargetPlatformsInput | string[]
+    productUrl: string
+    minBidAmount: number
+    maxBidAmount: number
     hook1: string
     hook2: string
     hook3: string
@@ -14433,6 +14797,10 @@ export namespace Prisma {
     title: string
     productDescription: string
     reelScript?: string
+    targetPlatforms?: BriefCreatetargetPlatformsInput | string[]
+    productUrl: string
+    minBidAmount: number
+    maxBidAmount: number
     hook1: string
     hook2: string
     hook3: string
@@ -14455,6 +14823,11 @@ export namespace Prisma {
     displayName?: string | null
     bio?: string | null
     logoUrl?: string | null
+    instagramUrl?: string | null
+    youtubeUrl?: string | null
+    tiktokUrl?: string | null
+    twitterUrl?: string | null
+    snapchatUrl?: string | null
     role?: $Enums.Role | null
     credits?: number
     earnings?: number
@@ -14472,6 +14845,11 @@ export namespace Prisma {
     displayName?: string | null
     bio?: string | null
     logoUrl?: string | null
+    instagramUrl?: string | null
+    youtubeUrl?: string | null
+    tiktokUrl?: string | null
+    twitterUrl?: string | null
+    snapchatUrl?: string | null
     role?: $Enums.Role | null
     credits?: number
     earnings?: number
@@ -14503,6 +14881,10 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     productDescription?: StringFieldUpdateOperationsInput | string
     reelScript?: StringFieldUpdateOperationsInput | string
+    targetPlatforms?: BriefUpdatetargetPlatformsInput | string[]
+    productUrl?: StringFieldUpdateOperationsInput | string
+    minBidAmount?: IntFieldUpdateOperationsInput | number
+    maxBidAmount?: IntFieldUpdateOperationsInput | number
     hook1?: StringFieldUpdateOperationsInput | string
     hook2?: StringFieldUpdateOperationsInput | string
     hook3?: StringFieldUpdateOperationsInput | string
@@ -14518,6 +14900,10 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     productDescription?: StringFieldUpdateOperationsInput | string
     reelScript?: StringFieldUpdateOperationsInput | string
+    targetPlatforms?: BriefUpdatetargetPlatformsInput | string[]
+    productUrl?: StringFieldUpdateOperationsInput | string
+    minBidAmount?: IntFieldUpdateOperationsInput | number
+    maxBidAmount?: IntFieldUpdateOperationsInput | number
     hook1?: StringFieldUpdateOperationsInput | string
     hook2?: StringFieldUpdateOperationsInput | string
     hook3?: StringFieldUpdateOperationsInput | string
@@ -14546,6 +14932,11 @@ export namespace Prisma {
     displayName?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    tiktokUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    snapchatUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     credits?: IntFieldUpdateOperationsInput | number
     earnings?: IntFieldUpdateOperationsInput | number
@@ -14563,6 +14954,11 @@ export namespace Prisma {
     displayName?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    tiktokUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    snapchatUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     credits?: IntFieldUpdateOperationsInput | number
     earnings?: IntFieldUpdateOperationsInput | number
@@ -14580,6 +14976,11 @@ export namespace Prisma {
     displayName?: string | null
     bio?: string | null
     logoUrl?: string | null
+    instagramUrl?: string | null
+    youtubeUrl?: string | null
+    tiktokUrl?: string | null
+    twitterUrl?: string | null
+    snapchatUrl?: string | null
     role?: $Enums.Role | null
     credits?: number
     earnings?: number
@@ -14597,6 +14998,11 @@ export namespace Prisma {
     displayName?: string | null
     bio?: string | null
     logoUrl?: string | null
+    instagramUrl?: string | null
+    youtubeUrl?: string | null
+    tiktokUrl?: string | null
+    twitterUrl?: string | null
+    snapchatUrl?: string | null
     role?: $Enums.Role | null
     credits?: number
     earnings?: number
@@ -14617,6 +15023,10 @@ export namespace Prisma {
     title: string
     productDescription: string
     reelScript?: string
+    targetPlatforms?: BriefCreatetargetPlatformsInput | string[]
+    productUrl: string
+    minBidAmount: number
+    maxBidAmount: number
     hook1: string
     hook2: string
     hook3: string
@@ -14632,6 +15042,10 @@ export namespace Prisma {
     title: string
     productDescription: string
     reelScript?: string
+    targetPlatforms?: BriefCreatetargetPlatformsInput | string[]
+    productUrl: string
+    minBidAmount: number
+    maxBidAmount: number
     hook1: string
     hook2: string
     hook3: string
@@ -14654,6 +15068,11 @@ export namespace Prisma {
     displayName?: string | null
     bio?: string | null
     logoUrl?: string | null
+    instagramUrl?: string | null
+    youtubeUrl?: string | null
+    tiktokUrl?: string | null
+    twitterUrl?: string | null
+    snapchatUrl?: string | null
     role?: $Enums.Role | null
     credits?: number
     earnings?: number
@@ -14671,6 +15090,11 @@ export namespace Prisma {
     displayName?: string | null
     bio?: string | null
     logoUrl?: string | null
+    instagramUrl?: string | null
+    youtubeUrl?: string | null
+    tiktokUrl?: string | null
+    twitterUrl?: string | null
+    snapchatUrl?: string | null
     role?: $Enums.Role | null
     credits?: number
     earnings?: number
@@ -14704,6 +15128,11 @@ export namespace Prisma {
     displayName?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    tiktokUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    snapchatUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     credits?: IntFieldUpdateOperationsInput | number
     earnings?: IntFieldUpdateOperationsInput | number
@@ -14721,6 +15150,11 @@ export namespace Prisma {
     displayName?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    tiktokUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    snapchatUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     credits?: IntFieldUpdateOperationsInput | number
     earnings?: IntFieldUpdateOperationsInput | number
@@ -14747,6 +15181,10 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     productDescription?: StringFieldUpdateOperationsInput | string
     reelScript?: StringFieldUpdateOperationsInput | string
+    targetPlatforms?: BriefUpdatetargetPlatformsInput | string[]
+    productUrl?: StringFieldUpdateOperationsInput | string
+    minBidAmount?: IntFieldUpdateOperationsInput | number
+    maxBidAmount?: IntFieldUpdateOperationsInput | number
     hook1?: StringFieldUpdateOperationsInput | string
     hook2?: StringFieldUpdateOperationsInput | string
     hook3?: StringFieldUpdateOperationsInput | string
@@ -14762,6 +15200,10 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     productDescription?: StringFieldUpdateOperationsInput | string
     reelScript?: StringFieldUpdateOperationsInput | string
+    targetPlatforms?: BriefUpdatetargetPlatformsInput | string[]
+    productUrl?: StringFieldUpdateOperationsInput | string
+    minBidAmount?: IntFieldUpdateOperationsInput | number
+    maxBidAmount?: IntFieldUpdateOperationsInput | number
     hook1?: StringFieldUpdateOperationsInput | string
     hook2?: StringFieldUpdateOperationsInput | string
     hook3?: StringFieldUpdateOperationsInput | string
@@ -14790,6 +15232,11 @@ export namespace Prisma {
     displayName?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    tiktokUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    snapchatUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     credits?: IntFieldUpdateOperationsInput | number
     earnings?: IntFieldUpdateOperationsInput | number
@@ -14807,6 +15254,11 @@ export namespace Prisma {
     displayName?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     logoUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    instagramUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    youtubeUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    tiktokUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    twitterUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    snapchatUrl?: NullableStringFieldUpdateOperationsInput | string | null
     role?: NullableEnumRoleFieldUpdateOperationsInput | $Enums.Role | null
     credits?: IntFieldUpdateOperationsInput | number
     earnings?: IntFieldUpdateOperationsInput | number
@@ -14932,6 +15384,10 @@ export namespace Prisma {
     title: string
     productDescription: string
     reelScript?: string
+    targetPlatforms?: BriefCreatetargetPlatformsInput | string[]
+    productUrl: string
+    minBidAmount: number
+    maxBidAmount: number
     hook1: string
     hook2: string
     hook3: string
@@ -14995,6 +15451,10 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     productDescription?: StringFieldUpdateOperationsInput | string
     reelScript?: StringFieldUpdateOperationsInput | string
+    targetPlatforms?: BriefUpdatetargetPlatformsInput | string[]
+    productUrl?: StringFieldUpdateOperationsInput | string
+    minBidAmount?: IntFieldUpdateOperationsInput | number
+    maxBidAmount?: IntFieldUpdateOperationsInput | number
     hook1?: StringFieldUpdateOperationsInput | string
     hook2?: StringFieldUpdateOperationsInput | string
     hook3?: StringFieldUpdateOperationsInput | string
@@ -15010,6 +15470,10 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     productDescription?: StringFieldUpdateOperationsInput | string
     reelScript?: StringFieldUpdateOperationsInput | string
+    targetPlatforms?: BriefUpdatetargetPlatformsInput | string[]
+    productUrl?: StringFieldUpdateOperationsInput | string
+    minBidAmount?: IntFieldUpdateOperationsInput | number
+    maxBidAmount?: IntFieldUpdateOperationsInput | number
     hook1?: StringFieldUpdateOperationsInput | string
     hook2?: StringFieldUpdateOperationsInput | string
     hook3?: StringFieldUpdateOperationsInput | string
@@ -15025,6 +15489,10 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     productDescription?: StringFieldUpdateOperationsInput | string
     reelScript?: StringFieldUpdateOperationsInput | string
+    targetPlatforms?: BriefUpdatetargetPlatformsInput | string[]
+    productUrl?: StringFieldUpdateOperationsInput | string
+    minBidAmount?: IntFieldUpdateOperationsInput | number
+    maxBidAmount?: IntFieldUpdateOperationsInput | number
     hook1?: StringFieldUpdateOperationsInput | string
     hook2?: StringFieldUpdateOperationsInput | string
     hook3?: StringFieldUpdateOperationsInput | string
