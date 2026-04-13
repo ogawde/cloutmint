@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SignUpForm } from "@/components/auth/SignUpForm";
+import { AuthInsetLayout } from "@/components/inset-login";
 import { getAuthSession } from "@/lib/auth-session";
 
 export default async function SignUpPage() {
@@ -11,15 +11,11 @@ export default async function SignUpPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-zinc-950 px-4 text-zinc-50">
-      <Card className="w-full max-w-md border-zinc-800 bg-zinc-900/85 shadow-sm">
-        <CardHeader>
-          <CardTitle className="text-2xl tracking-tight text-zinc-100">Create account</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <SignUpForm />
-        </CardContent>
-      </Card>
-    </main>
+    <AuthInsetLayout
+      title="Create your account"
+      description="Join CloutMint to post briefs, discover creators, and run campaigns."
+    >
+      <SignUpForm />
+    </AuthInsetLayout>
   );
 }

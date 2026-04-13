@@ -1,58 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CLOUTMINT
 
-## Getting Started
+CLOUTMINT is a full-stack creator marketplace platform built with Next.js 16.  
+This guide helps you get it running on your local machine quickly.
 
-First, run the development server:
+## Live demo
+
+Currently live at - [cloutmint.curr.xyz](https://cloutmint.curr.xyz)
+
+## Preview
+
+![CloutMint home screen](./public/cloutmint_demo.png)
+
+## Features
+
+- Role-based onboarding for Brands and Creators
+- Secure authentication with Better Auth (email/password + social provider support)
+- Brand flow to create/manage briefs and monitor creator bids
+- Creator flow to explore open briefs and submit pitches
+- Prisma-powered relational data model for users, briefs, bids, and projects
+- Responsive dark UI built with Next.js App Router + Tailwind + shadcn-style components
+
+## Local setup
+
+### 1) Clone the project
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <your-repo-url>
+cd cloutmint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2) Install dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3) Configure environment variables
 
-## Auth Setup (Better Auth)
-
-Set these env vars in `.env` before running auth flows:
+Create a `.env` file in the project root and add:
 
 ```bash
 BETTER_AUTH_SECRET=your_32_plus_char_secret
 BETTER_AUTH_URL=http://localhost:3000
 GOOGLE_CLIENT_ID=your_google_client_id
 GOOGLE_CLIENT_SECRET=your_google_client_secret
-DATABASE_URL=your_supabase_postgres_url
+DATABASE_URL=your_postgres_connection_string
 ```
 
-Auth route handler is mounted at `/api/auth/[...all]`.
-
-## Local Fresh Reset
-
-To reset local DB data and regenerate Prisma client:
+### 4) Setup database and Prisma client
 
 ```bash
-bun run db:reset-local
+npx prisma generate
+npx prisma db push
 ```
 
-## Learn More
+For a fresh local reset:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run db:reset-local
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 5) Start the app
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run dev
+```
 
-## Deploy on Vercel
+### 6) Open the app
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- App: `http://localhost:3000`
+- Auth route: `http://localhost:3000/api/auth/[...all]`
