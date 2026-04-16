@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { getAuthSession } from "@/lib/auth-session";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
 
 type PageProps = {
   params: Promise<{ brandId: string }>;
@@ -46,6 +46,11 @@ export default async function CreatorBrandProfilePage({ params }: PageProps) {
       bio: true,
       logoUrl: true,
       briefsAsBrand: {
+        where: {
+          status: {
+            not: "ARCHIVED",
+          },
+        },
         orderBy: { createdAt: "desc" },
         select: {
           id: true,
@@ -105,9 +110,12 @@ export default async function CreatorBrandProfilePage({ params }: PageProps) {
               <p className="mt-2 text-sm leading-6 text-zinc-400">{brand.bio || "No brand bio shared yet."}</p>
               <p className="mt-2 text-sm text-zinc-500">{brand.email}</p>
             </div>
-            <Button asChild variant="outline" size="sm">
-              <Link href="/creator/explore">Back to Explore</Link>
-            </Button>
+            <Link
+              href="/creator/explore"
+              className={buttonVariants({ variant: "outline", size: "sm" })}
+            >
+              Back to Explore
+            </Link>
           </div>
         </section>
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useTransition } from "react";
+import { useRef, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { updateBrandProfile } from "@/lib/actions/user";
 import { Button } from "@/components/ui/button";
@@ -14,13 +14,65 @@ type BrandProfileFormProps = {
   logoUrl: string | null;
 };
 
+type BrandProfileValues = {
+  displayName: string;
+  bio: string;
+  logoUrl: string;
+};
+
+const editableFieldNames = [
+  "displayName",
+  "bio",
+  "logoUrl",
+] as const satisfies ReadonlyArray<keyof BrandProfileValues>;
+
+function getProfileValues(formData: FormData): BrandProfileValues {
+  return {
+    displayName: String(formData.get("displayName") ?? ""),
+    bio: String(formData.get("bio") ?? ""),
+    logoUrl: String(formData.get("logoUrl") ?? ""),
+  };
+}
+
+function hasProfileChanges(
+  currentValues: BrandProfileValues,
+  savedValues: BrandProfileValues,
+) {
+  return editableFieldNames.some((fieldName) => currentValues[fieldName] !== savedValues[fieldName]);
+}
+
 export function BrandProfileForm({ email, displayName, bio, logoUrl }: BrandProfileFormProps) {
+  const formRef = useRef<HTMLFormElement>(null);
   const [isSaving, startSavingTransition] = useTransition();
+  const [savedValues, setSavedValues] = useState<BrandProfileValues>({
+    displayName: displayName ?? "",
+    bio: bio ?? "",
+    logoUrl: logoUrl ?? "",
+  });
+  const [hasChanges, setHasChanges] = useState(false);
+
+  const syncChangeState = () => {
+    const form = formRef.current;
+
+    if (!form) {
+      return;
+    }
+
+    const currentValues = getProfileValues(new FormData(form));
+    setHasChanges(hasProfileChanges(currentValues, savedValues));
+  };
 
   const handleSubmit = (formData: FormData) => {
+    if (!hasChanges) {
+      return;
+    }
+
     startSavingTransition(async () => {
       try {
         await updateBrandProfile(formData);
+        const nextSavedValues = getProfileValues(formData);
+        setSavedValues(nextSavedValues);
+        setHasChanges(false);
         toast.success("Profile saved", {
           description: "Your brand details have been updated.",
         });
@@ -32,8 +84,10 @@ export function BrandProfileForm({ email, displayName, bio, logoUrl }: BrandProf
     });
   };
 
+  const buttonLabel = isSaving ? "Saving..." : hasChanges ? "Save Profile" : "Saved";
+
   return (
-    <form action={handleSubmit} className="space-y-5">
+    <form ref={formRef} action={handleSubmit} onInput={syncChangeState} className="space-y-5">
       <div className="space-y-2">
         <p className="text-xs uppercase tracking-wide text-zinc-500">Email</p>
         <Input value={email} disabled className="bg-zinc-900" />
@@ -77,8 +131,13 @@ export function BrandProfileForm({ email, displayName, bio, logoUrl }: BrandProf
           disabled={isSaving}
         />
       </div>
-      <Button type="submit" disabled={isSaving}>
-        {isSaving ? "Saving..." : "Save Profile"}
+      <Button
+        type="submit"
+        variant={hasChanges || isSaving ? "default" : "outline"}
+        className={hasChanges || isSaving ? undefined : "border-zinc-700 bg-zinc-900 text-zinc-400"}
+        disabled={isSaving || !hasChanges}
+      >
+        {buttonLabel}
       </Button>
     </form>
   );

@@ -248,7 +248,8 @@ exports.Role = exports.$Enums.Role = {
 exports.BriefStatus = exports.$Enums.BriefStatus = {
   OPEN: 'OPEN',
   IN_PROGRESS: 'IN_PROGRESS',
-  COMPLETED: 'COMPLETED'
+  COMPLETED: 'COMPLETED',
+  ARCHIVED: 'ARCHIVED'
 };
 
 exports.BidStatus = exports.$Enums.BidStatus = {

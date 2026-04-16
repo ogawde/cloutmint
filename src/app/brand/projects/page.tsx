@@ -54,11 +54,8 @@ export default async function BrandProjectsPage() {
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-50">
       <div className="mx-auto max-w-5xl space-y-8 px-4 py-12">
-        <section className="rounded-xl border border-zinc-800 bg-zinc-900/70 px-6 py-5">
-          <h1 className="text-3xl font-semibold tracking-tight text-zinc-100">Brand Projects</h1>
-          <p className="mt-2 text-sm leading-6 text-zinc-400">
-            Review active, completed, and archived projects from your briefs.
-          </p>
+        <section className="space-y-1 border-b border-zinc-800 pb-3">
+          <h1 className="text-3xl font-semibold tracking-tight text-zinc-100">Brand Projects</h1> 
         </section>
         <Suspense fallback={<BrandProjectsSkeleton />}>
           <BrandProjectsSection brandId={brandUser.id} />

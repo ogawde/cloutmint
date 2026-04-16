@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
 import { cn } from "@/lib/utils";
 
 type RoleNavRole = "BRAND" | "CREATOR";
@@ -35,15 +35,19 @@ export function RoleNav({ role, activeHref }: RoleNavProps) {
           const isActive = item.href === activeHref;
 
           return (
-            <Button
+            <Link
               key={item.href}
-              asChild
-              size="sm"
-              variant={isActive ? "default" : "outline"}
-              className={cn(!isActive && "bg-zinc-900")}
+              href={item.href}
+              className={cn(
+                buttonVariants({
+                  size: "sm",
+                  variant: isActive ? "default" : "outline",
+                }),
+                !isActive && "bg-zinc-900",
+              )}
             >
-              <Link href={item.href}>{item.label}</Link>
-            </Button>
+              {item.label}
+            </Link>
           );
         })}
       </div>

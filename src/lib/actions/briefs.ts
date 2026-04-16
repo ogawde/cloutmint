@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { generateHooks } from "@/lib/ai";
 import { getAuthSession } from "@/lib/auth-session";
@@ -122,5 +123,53 @@ export async function createBrief(input: CreateBriefInput) {
   });
 
   return brief;
+}
+
+export async function archiveBrief(briefId: string) {
+  const session = await getAuthSession();
+  const authUserId = session?.user.id;
+
+  if (!authUserId) {
+    throw new Error("Unauthorized");
+  }
+
+  const brandUser = await prisma.user.findUnique({
+    where: { authUserId },
+    select: { id: true, role: true },
+  });
+
+  if (!brandUser || brandUser.role !== "BRAND") {
+    throw new Error("Only authorized brands can archive briefs.");
+  }
+
+  const brief = await prisma.brief.findUnique({
+    where: { id: briefId },
+    select: {
+      id: true,
+      brandId: true,
+      status: true,
+    },
+  });
+
+  if (!brief || brief.brandId !== brandUser.id) {
+    throw new Error("Brief not found.");
+  }
+
+  if (brief.status === "ARCHIVED") {
+    return brief;
+  }
+
+  const archivedBrief = await prisma.brief.update({
+    where: { id: brief.id },
+    data: {
+      status: "ARCHIVED",
+    },
+  });
+
+  revalidatePath("/brand/projects");
+  revalidatePath("/creator/explore");
+  revalidatePath(`/creator/brands/${brandUser.id}`);
+
+  return archivedBrief;
 }
 

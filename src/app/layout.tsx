@@ -43,7 +43,7 @@ export default async function RootLayout({
           userEmail={session?.user.email ?? null}
         />
         <PageTransition>{children}</PageTransition>
-        <Toaster richColors position="top-right" />
+        <Toaster richColors position="bottom-right" />
       </body>
     </html>
   );

@@ -45,6 +45,18 @@ export async function acceptBid(bidId: string) {
   }
 
   await prisma.$transaction(async (tx) => {
+    await tx.bid.updateMany({
+      where: {
+        briefId: bid.briefId,
+        id: {
+          not: bid.id,
+        },
+      },
+      data: {
+        status: "REJECTED",
+      },
+    });
+
     await tx.bid.update({
       where: {
         id: bid.id,
@@ -63,13 +75,88 @@ export async function acceptBid(bidId: string) {
       },
     });
 
-    await tx.project.create({
-      data: {
+    const existingProject = await tx.project.findFirst({
+      where: {
         briefId: bid.briefId,
-        brandId: bid.brief.brandId,
+      },
+      select: {
+        id: true,
+      },
+    });
+
+    if (!existingProject) {
+      await tx.project.create({
+        data: {
+          briefId: bid.briefId,
+          brandId: bid.brief.brandId,
+          creatorId: bid.creatorId,
+        },
+      });
+      return;
+    }
+
+    await tx.project.update({
+      where: {
+        id: existingProject.id,
+      },
+      data: {
         creatorId: bid.creatorId,
       },
     });
+  });
+}
+
+export async function rejectBid(bidId: string) {
+  const session = await getAuthSession();
+  const authUserId = session?.user.id;
+
+  if (!authUserId) {
+    throw new Error("Unauthorized");
+  }
+
+  const brandUser = await prisma.user.findUnique({
+    where: {
+      authUserId,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  if (!brandUser) {
+    throw new Error("Unauthorized");
+  }
+
+  const bid = await prisma.bid.findUnique({
+    where: {
+      id: bidId,
+    },
+    select: {
+      id: true,
+      status: true,
+      brief: {
+        select: {
+          brandId: true,
+        },
+      },
+    },
+  });
+
+  if (!bid || bid.brief.brandId !== brandUser.id) {
+    throw new Error("Unauthorized");
+  }
+
+  if (bid.status !== "PENDING") {
+    throw new Error("Only pending bids can be rejected");
+  }
+
+  await prisma.bid.update({
+    where: {
+      id: bid.id,
+    },
+    data: {
+      status: "REJECTED",
+    },
   });
 }
 

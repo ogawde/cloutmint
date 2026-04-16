@@ -2,10 +2,15 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { getAuthSession } from "@/lib/auth-session";
-import { updateCreatorProfile } from "@/lib/actions/user";
+import { CreatorProfileForm } from "@/components/creator/CreatorProfileForm";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import { buttonVariants } from "@/components/ui/button-variants";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
 
 const RECENT_BIDS_LIMIT = 20;
@@ -25,6 +30,97 @@ function getStatusClasses(status: string) {
   }
 
   return "border-zinc-700 text-zinc-300";
+}
+
+type DashboardCardStatus = "SUBMITTED" | "ACCEPTED" | "REJECTED" | "SETTLED";
+
+type BidCard = {
+  id: string;
+  briefId: string;
+  briefTitle: string;
+  brandId: string;
+  amount: number;
+  pitchText: string;
+  script: string;
+  projectStatus: string | null;
+  status: DashboardCardStatus;
+};
+
+function extractProposedScript(pitchText: string) {
+  const normalized = pitchText.trim();
+  const marker = "Proposed Script:";
+  const pitchMarker = "\n\nPitch:";
+
+  if (!normalized.startsWith(marker)) {
+    return normalized;
+  }
+
+  const startIndex = marker.length;
+  const endIndex = normalized.indexOf(pitchMarker);
+
+  if (endIndex === -1) {
+    return normalized.slice(startIndex).trim();
+  }
+
+  return normalized.slice(startIndex, endIndex).trim();
+}
+
+function renderBidDetails(card: BidCard) {
+  if (card.status === "SUBMITTED") {
+    return (
+      <div className="border-t border-zinc-800 pb-4 pt-3">
+        <p className="text-sm text-zinc-300">Your proposal is waiting for brand review.</p>
+      </div>
+    );
+  }
+
+  if (card.status === "ACCEPTED" || card.status === "SETTLED") {
+    return (
+      <div className="space-y-3 border-t border-zinc-800 pb-4 pt-3">
+        <div>
+          <p className="text-xs uppercase tracking-wide text-zinc-500">Proposed script</p>
+          <p className="mt-1 whitespace-pre-wrap text-sm text-zinc-200">
+            {card.script || "Script not available."}
+          </p>
+        </div>
+        {card.status === "SETTLED" && (
+          <p className="text-sm text-emerald-300">
+            Settled. Future chat settlement logic will be connected here.
+          </p>
+        )}
+        {card.projectStatus && (
+          <p className="text-xs uppercase tracking-wide text-zinc-500">
+            Project submission: {card.projectStatus}
+          </p>
+        )}
+        <div className="flex flex-wrap gap-2">
+          <Link
+            href={`/creator/brands/${card.brandId}`}
+            className={buttonVariants({ size: "sm", variant: "outline" })}
+          >
+            View Brand Profile
+          </Link>
+          <Button size="sm" type="button" disabled>
+            Contact
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-3 border-t border-zinc-800 pb-4 pt-3">
+      <div>
+        <p className="text-xs uppercase tracking-wide text-zinc-500">Proposed script</p>
+        <p className="mt-1 whitespace-pre-wrap text-sm text-zinc-200">
+          {card.script || "Script not available."}
+        </p>
+      </div>
+      <Button size="sm" type="button" disabled>
+        Check Winner
+      </Button>
+    </div>
+  );
 }
 
 export default async function CreatorDashboardPage() {
@@ -102,184 +198,77 @@ export default async function CreatorDashboardPage() {
     }),
   ]);
 
+  const projectByBriefId = new Map(projects.map((project) => [project.brief.id, project]));
+  const bidCards: BidCard[] = bids.map((bid) => {
+    const project = projectByBriefId.get(bid.brief.id);
+
+    let status: DashboardCardStatus = "SUBMITTED";
+    if (bid.status === "REJECTED") {
+      status = "REJECTED";
+    } else if (project?.submissionStatus === "APPROVED") {
+      status = "SETTLED";
+    } else if (bid.status === "ACCEPTED") {
+      status = "ACCEPTED";
+    }
+
+    return {
+      id: bid.id,
+      briefId: bid.brief.id,
+      briefTitle: bid.brief.title,
+      brandId: bid.brief.brandId,
+      amount: bid.amount,
+      pitchText: bid.pitchText,
+      script: extractProposedScript(bid.pitchText),
+      projectStatus: project?.submissionStatus ?? null,
+      status,
+    };
+  });
+
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-50">
       <div className="mx-auto max-w-5xl space-y-8 px-4 py-12">
         <section className="rounded-xl border border-zinc-800 bg-zinc-900/70 px-6 py-5">
-          <h1 className="text-3xl font-semibold tracking-tight text-zinc-100">Creator Dashboard</h1>
-          <p className="mt-2 text-sm leading-6 text-zinc-400">
-            Track your profile details, bids, and collaborations in one place.
-          </p>
-          <div className="mt-4 flex justify-end">
-            <Button asChild variant="outline" size="sm">
-              <Link href="/creator/explore">Explore Briefs</Link>
-            </Button>
-          </div>
-        </section>
-
-        <section className="rounded-xl border border-zinc-800 bg-zinc-900/70 px-6 py-5">
           <h2 className="text-xl font-semibold tracking-tight text-zinc-100">Profile</h2>
-          <form action={updateCreatorProfile} className="mt-4 grid gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
-              <label htmlFor="displayName" className="text-xs uppercase tracking-wide text-zinc-500">
-                Name
-              </label>
-              <Input
-                id="displayName"
-                name="displayName"
-                defaultValue={user.displayName ?? session?.user.name ?? ""}
-                placeholder="Your creator name"
-                className="bg-zinc-900"
-              />
-            </div>
-            <div className="space-y-2">
-              <p className="text-xs uppercase tracking-wide text-zinc-500">Email</p>
-              <Input value={user.email} disabled className="bg-zinc-900" />
-            </div>
-            <div className="space-y-2 sm:col-span-2">
-              <label htmlFor="bio" className="text-xs uppercase tracking-wide text-zinc-500">
-                Bio
-              </label>
-              <Textarea
-                id="bio"
-                name="bio"
-                defaultValue={user.bio ?? ""}
-                placeholder="Tell brands about your niche, style, and audience."
-                className="min-h-[120px] bg-zinc-900"
-              />
-            </div>
-            <div className="space-y-2">
-              <label htmlFor="instagramUrl" className="text-xs uppercase tracking-wide text-zinc-500">
-                Instagram URL
-              </label>
-              <Input id="instagramUrl" name="instagramUrl" defaultValue={user.instagramUrl ?? ""} className="bg-zinc-900" />
-            </div>
-            <div className="space-y-2">
-              <label htmlFor="youtubeUrl" className="text-xs uppercase tracking-wide text-zinc-500">
-                YouTube URL
-              </label>
-              <Input id="youtubeUrl" name="youtubeUrl" defaultValue={user.youtubeUrl ?? ""} className="bg-zinc-900" />
-            </div>
-            <div className="space-y-2">
-              <label htmlFor="tiktokUrl" className="text-xs uppercase tracking-wide text-zinc-500">
-                TikTok URL
-              </label>
-              <Input id="tiktokUrl" name="tiktokUrl" defaultValue={user.tiktokUrl ?? ""} className="bg-zinc-900" />
-            </div>
-            <div className="space-y-2">
-              <label htmlFor="twitterUrl" className="text-xs uppercase tracking-wide text-zinc-500">
-                Twitter/X URL
-              </label>
-              <Input id="twitterUrl" name="twitterUrl" defaultValue={user.twitterUrl ?? ""} className="bg-zinc-900" />
-            </div>
-            <div className="space-y-2">
-              <label htmlFor="snapchatUrl" className="text-xs uppercase tracking-wide text-zinc-500">
-                Snapchat URL
-              </label>
-              <Input id="snapchatUrl" name="snapchatUrl" defaultValue={user.snapchatUrl ?? ""} className="bg-zinc-900" />
-            </div>
-            <div className="sm:col-span-2">
-              <Button type="submit">Save Profile</Button>
-            </div>
-          </form>
+          <CreatorProfileForm
+            email={user.email}
+            displayName={user.displayName ?? session?.user.name ?? ""}
+            bio={user.bio ?? ""}
+            instagramUrl={user.instagramUrl ?? ""}
+            youtubeUrl={user.youtubeUrl ?? ""}
+            tiktokUrl={user.tiktokUrl ?? ""}
+            twitterUrl={user.twitterUrl ?? ""}
+            snapchatUrl={user.snapchatUrl ?? ""}
+          />
         </section>
 
         <section className="space-y-4">
           <h2 className="text-2xl font-semibold tracking-tight text-zinc-100">Bid Status</h2>
-          {bids.length === 0 ? (
+          {bidCards.length === 0 ? (
             <p className="text-sm leading-6 text-zinc-400">No bids submitted yet.</p>
           ) : (
-            <div className="grid gap-4 sm:grid-cols-2">
-              {bids.map((bid) => (
-                <details
-                  key={bid.id}
-                  className="rounded-xl border border-zinc-800 bg-zinc-900/70 px-5 py-4"
-                >
-                  <summary className="cursor-pointer list-none space-y-1">
-                    <p className="text-base font-semibold text-zinc-100">{bid.brief.title}</p>
-                    <p
-                      className={cn(
-                        "inline-flex w-fit rounded-full border px-2 py-0.5 text-xs uppercase tracking-wide",
-                        getStatusClasses(bid.status),
-                      )}
-                    >
-                      Bid status: {bid.status}
-                    </p>
-                    <p className="text-sm text-zinc-300">Offered amount: ${bid.amount}</p>
-                  </summary>
-                  <div className="mt-4 space-y-3 border-t border-zinc-800 pt-4">
-                    <div className="flex flex-wrap gap-2">
-                      <Button asChild size="sm" variant="outline">
-                        <Link href={`/creator/brands/${bid.brief.brandId}`}>View Brand Profile</Link>
-                      </Button>
-                      {bid.status === "ACCEPTED" && (
-                        <span className="text-xs text-emerald-300">
-                          Accepted bids now move into Project Progress.
-                        </span>
-                      )}
-                    </div>
-                    <div>
-                      <p className="text-xs uppercase tracking-wide text-zinc-500">Pitch submitted</p>
-                      <p className="mt-1 text-sm text-zinc-200 whitespace-pre-wrap">{bid.pitchText}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs uppercase tracking-wide text-zinc-500">Brief video script snapshot</p>
-                      <p className="mt-1 text-sm text-zinc-400 whitespace-pre-wrap">
-                        {bid.brief.reelScript || "No script available."}
-                      </p>
-                    </div>
-                  </div>
-                </details>
+            <Accordion type="single" collapsible className="border-t border-zinc-800">
+              {bidCards.map((card) => (
+                <AccordionItem key={card.id} value={card.id} className="border-b border-zinc-800">
+                  <article>
+                    <AccordionTrigger className="hover:no-underline">
+                      <div className="flex-1 space-y-1">
+                        <p className="text-base font-semibold text-zinc-100">{card.briefTitle}</p>
+                        <p
+                          className={cn(
+                            "inline-flex w-fit rounded-full border px-2 py-0.5 text-xs uppercase tracking-wide",
+                            getStatusClasses(card.status),
+                          )}
+                        >
+                          Bid status: {card.status}
+                        </p>
+                        <p className="text-sm text-zinc-300">Offered amount: ${card.amount}</p>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent>{renderBidDetails(card)}</AccordionContent>
+                  </article>
+                </AccordionItem>
               ))}
-            </div>
-          )}
-        </section>
-
-        <section className="space-y-4">
-          <h2 className="text-2xl font-semibold tracking-tight text-zinc-100">Project Progress</h2>
-          {projects.length === 0 ? (
-            <p className="text-sm leading-6 text-zinc-400">No active projects yet.</p>
-          ) : (
-            <div className="grid gap-4 sm:grid-cols-2">
-              {projects.map((project) => (
-                <details
-                  key={project.id}
-                  className="rounded-xl border border-zinc-800 bg-zinc-900/70 px-5 py-4"
-                >
-                  <summary className="cursor-pointer list-none space-y-1">
-                    <p className="text-base font-semibold text-zinc-100">{project.brief.title}</p>
-                    <p
-                      className={cn(
-                        "inline-flex w-fit rounded-full border px-2 py-0.5 text-xs uppercase tracking-wide",
-                        getStatusClasses(project.submissionStatus),
-                      )}
-                    >
-                      Submission: {project.submissionStatus}
-                    </p>
-                    <p className="text-sm text-zinc-300">
-                      {project.videoUrl ? "Submission uploaded" : "Submission not uploaded yet"}
-                    </p>
-                  </summary>
-                  <div className="mt-4 space-y-3 border-t border-zinc-800 pt-4">
-                    <div>
-                      <p className="text-xs uppercase tracking-wide text-zinc-500">Brief status</p>
-                      <p className="mt-1 text-sm text-zinc-200">{project.brief.status}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs uppercase tracking-wide text-zinc-500">Video URL</p>
-                      <p className="mt-1 break-all text-sm text-zinc-400">
-                        {project.videoUrl ?? "No submission URL yet."}
-                      </p>
-                    </div>
-                    <div>
-                      <Button asChild size="sm" variant="outline">
-                        <Link href={`/creator/brands/${project.brief.brandId}`}>Visit Brand</Link>
-                      </Button>
-                    </div>
-                  </div>
-                </details>
-              ))}
-            </div>
+            </Accordion>
           )}
         </section>
       </div>

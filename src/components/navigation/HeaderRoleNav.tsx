@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button-variants";
 import { cn } from "@/lib/utils";
 
 type HeaderRole = "BRAND" | "CREATOR";
@@ -13,7 +13,6 @@ type NavItem = {
 };
 
 const BRAND_ITEMS: NavItem[] = [
-  { href: "/brand/briefs", label: "Briefs" },
   { href: "/brand/projects", label: "Projects" },
   { href: "/brand/new", label: "New Brief" },
   { href: "/brand/profile", label: "Profile" },
@@ -30,28 +29,28 @@ export function HeaderRoleNav({ role }: { role: HeaderRole }) {
   const items = role === "BRAND" ? BRAND_ITEMS : CREATOR_ITEMS;
 
   return (
-    <nav className="hidden items-center gap-2 lg:flex">
+    <nav className="flex items-center gap-2">
       {items.map((item) => {
         const isActive = pathname === item.href;
 
         return (
-          <Button
+          <Link
             key={item.href}
-            asChild
-            size="sm"
-            variant={isActive ? "default" : "outline"}
-            className={cn(!isActive && "bg-zinc-900")}
+            href={item.href}
+            prefetch
+            onMouseEnter={() => {
+              router.prefetch(item.href);
+            }}
+            className={cn(
+              buttonVariants({
+                size: "sm",
+                variant: isActive ? "default" : "outline",
+              }),
+              !isActive && "bg-zinc-900",
+            )}
           >
-            <Link
-              href={item.href}
-              prefetch
-              onMouseEnter={() => {
-                router.prefetch(item.href);
-              }}
-            >
-              {item.label}
-            </Link>
-          </Button>
+            {item.label}
+          </Link>
         );
       })}
     </nav>

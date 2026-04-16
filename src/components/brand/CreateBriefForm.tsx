@@ -126,7 +126,7 @@ export function CreateBriefForm() {
         toast.success("Brief created", {
           description: "Your brief is live and creators can now bid on it.",
         });
-        router.push("/brand/briefs");
+        router.push("/brand/projects");
         router.refresh();
       } catch {
         toast.error("Could not create brief", {

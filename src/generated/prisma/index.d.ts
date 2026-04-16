@@ -69,7 +69,8 @@ export type Role = (typeof Role)[keyof typeof Role]
 export const BriefStatus: {
   OPEN: 'OPEN',
   IN_PROGRESS: 'IN_PROGRESS',
-  COMPLETED: 'COMPLETED'
+  COMPLETED: 'COMPLETED',
+  ARCHIVED: 'ARCHIVED'
 };
 
 export type BriefStatus = (typeof BriefStatus)[keyof typeof BriefStatus]
