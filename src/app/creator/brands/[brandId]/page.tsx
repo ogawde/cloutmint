@@ -63,10 +63,18 @@ export default async function CreatorBrandProfilePage({ params }: PageProps) {
             },
           },
           projects: {
+            where: {
+              creatorId: currentUser.id,
+            },
             select: {
               id: true,
-              submissionStatus: true,
-              videoUrl: true,
+              status: true,
+              deliverables: {
+                select: {
+                  platform: true,
+                  url: true,
+                },
+              },
               creator: {
                 select: {
                   displayName: true,
@@ -87,15 +95,16 @@ export default async function CreatorBrandProfilePage({ params }: PageProps) {
   const openBriefs = brand.briefsAsBrand.filter((brief) => brief.status === "OPEN");
   const completedBriefs = brand.briefsAsBrand.filter((brief) => brief.status === "COMPLETED");
   const finalDeliverables = brand.briefsAsBrand.flatMap((brief) =>
-    brief.projects
-      .filter((project) => Boolean(project.videoUrl))
-      .map((project) => ({
+    brief.projects.flatMap((project) =>
+      project.deliverables.map((deliverable) => ({
+        projectId: project.id,
         briefId: brief.id,
         briefTitle: brief.title,
-        creatorName: project.creator.displayName || project.creator.email,
-        status: project.submissionStatus,
-        videoUrl: project.videoUrl as string,
+        status: project.status,
+        platform: deliverable.platform,
+        url: deliverable.url,
       })),
+    ),
   );
 
   return (
@@ -162,13 +171,28 @@ export default async function CreatorBrandProfilePage({ params }: PageProps) {
           ) : (
             <div className="space-y-3">
               {finalDeliverables.map((item) => (
-                <article key={`${item.briefId}-${item.videoUrl}`} className="rounded-xl border border-zinc-800 bg-zinc-900/70 px-5 py-4">
+                <article
+                  key={`${item.briefId}-${item.url}`}
+                  className="rounded-xl border border-zinc-800 bg-zinc-900/70 px-5 py-4"
+                >
                   <p className="text-base font-semibold text-zinc-100">{item.briefTitle}</p>
-                  <p className="mt-1 text-sm text-zinc-300">Creator: {item.creatorName}</p>
-                  <p className="text-sm text-zinc-400">Status: {item.status}</p>
-                  <a href={item.videoUrl} target="_blank" rel="noreferrer" className="mt-2 inline-block text-sm text-zinc-100 underline underline-offset-4">
-                    View final posted video
+                  <p className="text-sm text-zinc-400">
+                    Status: {item.status.replace(/_/g, " ")}
+                  </p>
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-2 inline-block text-sm text-zinc-100 underline underline-offset-4"
+                  >
+                    {item.platform} post
                   </a>
+                  <Link
+                    href={`/creator/projects/${item.projectId}`}
+                    className="mt-2 block text-xs text-zinc-500 underline underline-offset-4"
+                  >
+                    Open project
+                  </Link>
                 </article>
               ))}
             </div>

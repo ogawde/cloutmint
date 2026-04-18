@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { generateHooks } from "@/lib/ai";
 import { getAuthSession } from "@/lib/auth-session";
+import { combineCreatorBrief } from "@/lib/creator-brief";
 
 type CreateBriefInput = {
   title: string;
@@ -13,9 +14,6 @@ type CreateBriefInput = {
   productUrl: string;
   minBidAmount: number;
   maxBidAmount: number;
-  hook1?: string;
-  hook2?: string;
-  hook3?: string;
 };
 
 type GenerateBriefScriptInput = {
@@ -57,9 +55,6 @@ export async function createBrief(input: CreateBriefInput) {
     productUrl,
     minBidAmount,
     maxBidAmount,
-    hook1: inputHook1,
-    hook2: inputHook2,
-    hook3: inputHook3,
   } = input;
 
   const session = await getAuthSession();
@@ -93,17 +88,17 @@ export async function createBrief(input: CreateBriefInput) {
     throw new Error("Invalid bid range.");
   }
 
-  let hook1 = inputHook1?.trim() ?? "";
-  let hook2 = inputHook2?.trim() ?? "";
-  let hook3 = inputHook3?.trim() ?? "";
   let finalScript = reelScript.trim();
+  let hook1 = "";
+  let hook2 = "";
+  let hook3 = "";
 
-  if (!finalScript || !hook1 || !hook2 || !hook3) {
+  if (!finalScript) {
     const generated = await generateHooks(productDescription);
-    hook1 = hook1 || generated.hook1;
-    hook2 = hook2 || generated.hook2;
-    hook3 = hook3 || generated.hook3;
-    finalScript = finalScript || generated.reelScript;
+    hook1 = generated.idea1;
+    hook2 = generated.idea2;
+    hook3 = generated.idea3;
+    finalScript = combineCreatorBrief(generated.reelScript, generated);
   }
 
   const brief = await prisma.brief.create({

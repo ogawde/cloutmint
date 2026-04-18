@@ -28,7 +28,11 @@ export function BriefBids({ bids }: BriefBidsProps) {
     setPendingId(bidId);
 
     try {
-      await acceptBid(bidId);
+      const result = await acceptBid(bidId);
+      if (result?.projectId) {
+        router.push(`/brand/projects/${result.projectId}`);
+        return;
+      }
       router.refresh();
     } finally {
       setPendingId(null);

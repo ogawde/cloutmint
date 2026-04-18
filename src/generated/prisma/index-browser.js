@@ -217,18 +217,70 @@ exports.Prisma.BidScalarFieldEnum = {
 
 exports.Prisma.ProjectScalarFieldEnum = {
   id: 'id',
-  videoUrl: 'videoUrl',
-  submissionStatus: 'submissionStatus',
+  bidId: 'bidId',
   briefId: 'briefId',
   brandId: 'brandId',
   creatorId: 'creatorId',
+  agreedAmount: 'agreedAmount',
+  status: 'status',
+  creatorSubmittedAt: 'creatorSubmittedAt',
+  creatorSubmissionNote: 'creatorSubmissionNote',
+  brandApprovedAt: 'brandApprovedAt',
+  approvedById: 'approvedById',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ProjectDeliverableScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  platform: 'platform',
+  url: 'url',
+  notes: 'notes',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ProjectMessageScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  senderId: 'senderId',
+  body: 'body',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ProjectEscrowScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  brandId: 'brandId',
+  creatorId: 'creatorId',
+  amount: 'amount',
+  status: 'status',
+  holdPlacedAt: 'holdPlacedAt',
+  autoReleaseAt: 'autoReleaseAt',
+  releasedAt: 'releasedAt',
+  releaseReason: 'releaseReason'
+};
+
+exports.Prisma.ProjectEventScalarFieldEnum = {
+  id: 'id',
+  projectId: 'projectId',
+  actorId: 'actorId',
+  type: 'type',
+  note: 'note',
+  metadata: 'metadata',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -239,6 +291,12 @@ exports.Prisma.QueryMode = {
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
 };
 exports.Role = exports.$Enums.Role = {
   BRAND: 'BRAND',
@@ -258,10 +316,38 @@ exports.BidStatus = exports.$Enums.BidStatus = {
   REJECTED: 'REJECTED'
 };
 
-exports.SubmissionStatus = exports.$Enums.SubmissionStatus = {
-  PENDING: 'PENDING',
+exports.ProjectStatus = exports.$Enums.ProjectStatus = {
+  AWAITING_FUNDING: 'AWAITING_FUNDING',
+  ACTIVE: 'ACTIVE',
+  SUBMITTED: 'SUBMITTED',
+  REVISION_REQUESTED: 'REVISION_REQUESTED',
   APPROVED: 'APPROVED',
-  REVISIONS: 'REVISIONS'
+  AUTO_RELEASED: 'AUTO_RELEASED',
+  CANCELED: 'CANCELED'
+};
+
+exports.EscrowStatus = exports.$Enums.EscrowStatus = {
+  HELD: 'HELD',
+  RELEASED: 'RELEASED',
+  REFUNDED: 'REFUNDED'
+};
+
+exports.EscrowReleaseReason = exports.$Enums.EscrowReleaseReason = {
+  BRAND_APPROVAL: 'BRAND_APPROVAL',
+  AUTO_TIMEOUT: 'AUTO_TIMEOUT',
+  MANUAL_REFUND: 'MANUAL_REFUND'
+};
+
+exports.ProjectEventType = exports.$Enums.ProjectEventType = {
+  ESCROW_HELD: 'ESCROW_HELD',
+  MESSAGE_SENT: 'MESSAGE_SENT',
+  DELIVERABLE_ADDED: 'DELIVERABLE_ADDED',
+  DELIVERABLE_REMOVED: 'DELIVERABLE_REMOVED',
+  CREATOR_SUBMITTED: 'CREATOR_SUBMITTED',
+  BRAND_APPROVED: 'BRAND_APPROVED',
+  REVISION_REQUESTED: 'REVISION_REQUESTED',
+  AUTO_RELEASED: 'AUTO_RELEASED',
+  ESCROW_REFUNDED: 'ESCROW_REFUNDED'
 };
 
 exports.Prisma.ModelName = {
@@ -272,7 +358,11 @@ exports.Prisma.ModelName = {
   User: 'User',
   Brief: 'Brief',
   Bid: 'Bid',
-  Project: 'Project'
+  Project: 'Project',
+  ProjectDeliverable: 'ProjectDeliverable',
+  ProjectMessage: 'ProjectMessage',
+  ProjectEscrow: 'ProjectEscrow',
+  ProjectEvent: 'ProjectEvent'
 };
 
 /**

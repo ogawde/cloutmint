@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { createBrief, generateBriefScript } from "@/lib/actions/briefs";
+import { combineCreatorBrief } from "@/lib/creator-brief";
 
 const TARGET_PLATFORM_OPTIONS = [
   "YouTube",
@@ -19,14 +20,6 @@ const TARGET_PLATFORM_OPTIONS = [
   "YouTube Shorts",
 ] as const;
 
-function normalizeScriptFormatting(script: string) {
-  return script
-    .replace(/\]\s*(?=\[)/g, "]\n")
-    .replace(/\s*\[(Audio|Visual):/g, "\n[$1:")
-    .replace(/\n{3,}/g, "\n\n")
-    .trim();
-}
-
 export function CreateBriefForm() {
   const [title, setTitle] = useState("");
   const [productDescription, setProductDescription] = useState("");
@@ -34,9 +27,6 @@ export function CreateBriefForm() {
   const [minBidAmount, setMinBidAmount] = useState("");
   const [maxBidAmount, setMaxBidAmount] = useState("");
   const [script, setScript] = useState("");
-  const [hook1, setHook1] = useState("");
-  const [hook2, setHook2] = useState("");
-  const [hook3, setHook3] = useState("");
   const [targetPlatforms, setTargetPlatforms] = useState<string[]>([]);
   const [generationCount, setGenerationCount] = useState(0);
   const [isGenerating, startGeneratingTransition] = useTransition();
@@ -56,13 +46,16 @@ export function CreateBriefForm() {
           regenAttempt: generationCount + 1,
         });
 
-        setHook1(result.hook1);
-        setHook2(result.hook2);
-        setHook3(result.hook3);
-        setScript(normalizeScriptFormatting(result.reelScript));
+        setScript(
+          combineCreatorBrief(result.reelScript, {
+            idea1: result.idea1,
+            idea2: result.idea2,
+            idea3: result.idea3,
+          }),
+        );
         setGenerationCount((count) => count + 1);
       } catch {
-        toast.error("Script generation failed", {
+        toast.error("Brief generation failed", {
           description: "Please try again.",
         });
       }
@@ -107,9 +100,6 @@ export function CreateBriefForm() {
           minBidAmount: minAmount,
           maxBidAmount: maxAmount,
           reelScript: script,
-          hook1,
-          hook2,
-          hook3,
         });
 
         setTitle("");
@@ -118,9 +108,6 @@ export function CreateBriefForm() {
         setMinBidAmount("");
         setMaxBidAmount("");
         setScript("");
-        setHook1("");
-        setHook2("");
-        setHook3("");
         setTargetPlatforms([]);
         setGenerationCount(0);
         toast.success("Brief created", {
@@ -173,7 +160,7 @@ export function CreateBriefForm() {
                 id="productDescription"
                 value={productDescription}
                 onChange={(event) => setProductDescription(event.target.value)}
-                placeholder="Describe your product so we can mint compelling hooks"
+                placeholder="Describe your product — we'll draft a casual creator brief and idea starters"
                 className="min-h-[140px] bg-zinc-950/70"
                 disabled={isGenerating || isCreating}
               />
@@ -219,17 +206,17 @@ export function CreateBriefForm() {
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="script">Video Script</Label>
+              <Label htmlFor="script">Creator Brief</Label>
               <Textarea
                 id="script"
                 value={script}
                 onChange={(event) => setScript(event.target.value)}
-                placeholder="Generate a video script and edit it before creating your brief"
-                className="min-h-[180px] bg-zinc-950/70"
+                placeholder="Generate a full creator brief (direction, deliverables, video concepts) or write your own"
+                className="min-h-[280px] bg-zinc-950/70"
                 disabled={isCreating}
               />
               <p className="text-xs text-zinc-400">
-                Script generations used: {generationCount}/3
+                Brief generations used: {generationCount}/3
               </p>
             </div>
             <div className="space-y-3">
@@ -286,7 +273,7 @@ export function CreateBriefForm() {
                 disabled={isGenerating || isCreating || generationCount >= 3 || !productDescription.trim()}
                 onClick={handleGenerateScript}
               >
-                {isGenerating ? "Generating..." : "Generate Script"}
+                {isGenerating ? "Generating..." : "Generate Brief"}
               </Button>
             <Button
               type="submit"
@@ -313,7 +300,7 @@ export function CreateBriefForm() {
           <div className="flex flex-col items-center gap-3">
             <div className="h-10 w-10 animate-spin rounded-full border-2 border-zinc-600 border-t-zinc-200" />
             <p className="text-sm font-medium text-zinc-200 animate-pulse">
-              {isGenerating ? "Generating your script..." : "Saving your brief..."}
+              {isGenerating ? "Generating your creator brief..." : "Saving your brief..."}
             </p>
           </div>
         </div>

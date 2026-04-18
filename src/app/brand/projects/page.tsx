@@ -24,7 +24,7 @@ async function BrandProjectsSection({ brandId }: { brandId: string }) {
       projects: {
         select: {
           id: true,
-          submissionStatus: true,
+          status: true,
           createdAt: true,
         },
       },

@@ -137,6 +137,15 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   type __Unused = __Check
 }
 
+// Validate ../../src/app/creator/projects/[projectId]/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/creator/projects/[projectId]">> = Specific
+  const handler = {} as typeof import("../../src/app/creator/projects/[projectId]/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../src/app/page.tsx
 {
   type __IsExpected<Specific extends AppPageConfig<"/">> = Specific
@@ -168,6 +177,15 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
 {
   type __IsExpected<Specific extends RouteHandlerConfig<"/api/auth/[...all]">> = Specific
   const handler = {} as typeof import("../../src/app/api/auth/[...all]/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../src/app/api/cron/auto-release/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/cron/auto-release">> = Specific
+  const handler = {} as typeof import("../../src/app/api/cron/auto-release/route.js")
   type __Check = __IsExpected<typeof handler>
   // @ts-ignore
   type __Unused = __Check

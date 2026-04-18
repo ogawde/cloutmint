@@ -63,9 +63,15 @@ export default async function BrandCreatorProfilePage({ params }: PageProps) {
       projectsAsCreator: {
         select: {
           id: true,
-          submissionStatus: true,
-          videoUrl: true,
+          status: true,
           createdAt: true,
+          deliverables: {
+            select: {
+              platform: true,
+              url: true,
+            },
+            take: 3,
+          },
           brief: {
             select: {
               title: true,
@@ -94,7 +100,7 @@ export default async function BrandCreatorProfilePage({ params }: PageProps) {
 
   const acceptedBidCount = creator.bidsAsCreator.filter((bid) => bid.status === "ACCEPTED").length;
   const approvedSubmissionCount = creator.projectsAsCreator.filter(
-    (project) => project.submissionStatus === "APPROVED",
+    (project) => project.status === "APPROVED" || project.status === "AUTO_RELEASED",
   ).length;
 
   return (
@@ -177,21 +183,32 @@ export default async function BrandCreatorProfilePage({ params }: PageProps) {
                   key={project.id}
                   className="border-b border-zinc-800 px-1 py-3"
                 >
-                  <p className="text-sm font-semibold text-zinc-100">{project.brief.title}</p>
+                  <Link
+                    href={`/brand/projects/${project.id}`}
+                    className="text-sm font-semibold text-zinc-100 underline-offset-4 hover:underline"
+                  >
+                    {project.brief.title}
+                  </Link>
                   <p className="mt-1 text-xs uppercase tracking-wide text-zinc-500">
-                    Submission: {project.submissionStatus}
+                    Status: {project.status.replace(/_/g, " ")}
                   </p>
-                  {project.videoUrl ? (
-                    <a
-                      href={project.videoUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="mt-1 inline-block text-sm text-zinc-100 underline underline-offset-4"
-                    >
-                      View final video
-                    </a>
+                  {project.deliverables.length > 0 ? (
+                    <ul className="mt-2 space-y-1">
+                      {project.deliverables.map((d) => (
+                        <li key={d.url}>
+                          <a
+                            href={d.url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="text-sm text-zinc-100 underline underline-offset-4"
+                          >
+                            {d.platform}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
                   ) : (
-                    <p className="mt-1 text-sm text-zinc-400">No video URL submitted yet.</p>
+                    <p className="mt-1 text-sm text-zinc-400">No deliverables yet.</p>
                   )}
                   <p className="mt-1 text-xs text-zinc-500">{formatDate(project.createdAt)}</p>
                 </article>

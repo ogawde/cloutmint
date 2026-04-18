@@ -3,7 +3,6 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { getAuthSession } from "@/lib/auth-session";
 import { CreatorProfileForm } from "@/components/creator/CreatorProfileForm";
-import { Button } from "@/components/ui/button";
 import { buttonVariants } from "@/components/ui/button-variants";
 import {
   Accordion,
@@ -21,7 +20,7 @@ function getStatusClasses(status: string) {
     return "border-amber-600/50 bg-amber-500/10 text-amber-300";
   }
 
-  if (status === "ACCEPTED" || status === "APPROVED") {
+  if (status === "ACCEPTED" || status === "SETTLED") {
     return "border-emerald-600/50 bg-emerald-500/10 text-emerald-300";
   }
 
@@ -39,6 +38,7 @@ type BidCard = {
   briefId: string;
   briefTitle: string;
   brandId: string;
+  projectId: string | null;
   amount: number;
   pitchText: string;
   script: string;
@@ -84,13 +84,11 @@ function renderBidDetails(card: BidCard) {
           </p>
         </div>
         {card.status === "SETTLED" && (
-          <p className="text-sm text-emerald-300">
-            Settled. Future chat settlement logic will be connected here.
-          </p>
+          <p className="text-sm text-emerald-300">Project completed. Funds released.</p>
         )}
         {card.projectStatus && (
           <p className="text-xs uppercase tracking-wide text-zinc-500">
-            Project submission: {card.projectStatus}
+            Project: {card.projectStatus.replace(/_/g, " ")}
           </p>
         )}
         <div className="flex flex-wrap gap-2">
@@ -100,9 +98,14 @@ function renderBidDetails(card: BidCard) {
           >
             View Brand Profile
           </Link>
-          <Button size="sm" type="button" disabled>
-            Contact
-          </Button>
+          {card.projectId && (
+            <Link
+              href={`/creator/projects/${card.projectId}`}
+              className={buttonVariants({ size: "sm" })}
+            >
+              Open project
+            </Link>
+          )}
         </div>
       </div>
     );
@@ -116,9 +119,7 @@ function renderBidDetails(card: BidCard) {
           {card.script || "Script not available."}
         </p>
       </div>
-      <Button size="sm" type="button" disabled>
-        Check Winner
-      </Button>
+      <p className="text-sm text-zinc-400">Waiting for the brand to review bids.</p>
     </div>
   );
 }
@@ -205,7 +206,10 @@ export default async function CreatorDashboardPage() {
     let status: DashboardCardStatus = "SUBMITTED";
     if (bid.status === "REJECTED") {
       status = "REJECTED";
-    } else if (project?.submissionStatus === "APPROVED") {
+    } else if (
+      project?.status === "APPROVED" ||
+      project?.status === "AUTO_RELEASED"
+    ) {
       status = "SETTLED";
     } else if (bid.status === "ACCEPTED") {
       status = "ACCEPTED";
@@ -216,10 +220,11 @@ export default async function CreatorDashboardPage() {
       briefId: bid.brief.id,
       briefTitle: bid.brief.title,
       brandId: bid.brief.brandId,
+      projectId: project?.id ?? null,
       amount: bid.amount,
       pitchText: bid.pitchText,
       script: extractProposedScript(bid.pitchText),
-      projectStatus: project?.submissionStatus ?? null,
+      projectStatus: project?.status ?? null,
       status,
     };
   });

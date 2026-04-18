@@ -13,7 +13,14 @@ type BrandBrief = {
   };
   projects: {
     id: string;
-    submissionStatus: "PENDING" | "APPROVED" | "REVISIONS";
+    status:
+      | "AWAITING_FUNDING"
+      | "ACTIVE"
+      | "SUBMITTED"
+      | "REVISION_REQUESTED"
+      | "APPROVED"
+      | "AUTO_RELEASED"
+      | "CANCELED";
     createdAt: Date;
   }[];
 };
@@ -27,11 +34,13 @@ function getBriefBucket(brief: BrandBrief) {
     return "archived";
   }
 
-  const hasApprovedProject = brief.projects.some(
-    (project) => project.submissionStatus === "APPROVED",
-  );
+  const project = brief.projects[0];
+  const isComplete =
+    brief.status === "COMPLETED" ||
+    project?.status === "APPROVED" ||
+    project?.status === "AUTO_RELEASED";
 
-  if (brief.status === "COMPLETED" || hasApprovedProject) {
+  if (isComplete) {
     return "completed";
   }
 
@@ -116,6 +125,7 @@ function ProjectSection({
                   </p>
                   <p className="mt-2 text-xs uppercase tracking-wide text-zinc-500">
                     Bids: {brief._count.bids}
+                    {brief.projects[0] && ` · ${brief.projects[0].status.replace(/_/g, " ")}`}
                   </p>
                 </CardContent>
               </Link>
@@ -128,27 +138,21 @@ function ProjectSection({
 }
 
 export function BrandProjectsView({ briefs }: BrandProjectsViewProps) {
-  const activeBriefs = briefs.filter(
-    (brief) => getBriefBucket(brief) === "active",
-  );
-  const completedBriefs = briefs.filter(
-    (brief) => getBriefBucket(brief) === "completed",
-  );
-  const archivedBriefs = briefs.filter(
-    (brief) => getBriefBucket(brief) === "archived",
-  );
+  const activeBriefs = briefs.filter((brief) => getBriefBucket(brief) === "active");
+  const completedBriefs = briefs.filter((brief) => getBriefBucket(brief) === "completed");
+  const archivedBriefs = briefs.filter((brief) => getBriefBucket(brief) === "archived");
 
   return (
     <div className="space-y-8">
       <ProjectSection
         title="Active"
-        description="New briefs and ongoing bidding activity appear here."
+        description="Briefs with open bids or funded projects in progress."
         showArchiveAction
         briefs={activeBriefs}
       />
       <ProjectSection
         title="Completed"
-        description="Briefs that have finished with approved project outcomes."
+        description="Briefs with approved or auto-released project outcomes."
         briefs={completedBriefs}
       />
       <ProjectSection
@@ -159,4 +163,3 @@ export function BrandProjectsView({ briefs }: BrandProjectsViewProps) {
     </div>
   );
 }
-

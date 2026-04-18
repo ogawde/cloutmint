@@ -45,10 +45,14 @@ export function BrandBidReviewCard({
   const handleAccept = async () => {
     setPendingAction("accept");
     try {
-      await acceptBid(bidId);
+      const result = await acceptBid(bidId);
       toast.success("Bid accepted", {
-        description: "Project created and the creator has been assigned.",
+        description: "Fund the project to hold credits in escrow and unlock chat.",
       });
+      if (result?.projectId) {
+        router.push(`/brand/projects/${result.projectId}`);
+        return;
+      }
       router.refresh();
     } catch {
       toast.error("Could not accept bid", {

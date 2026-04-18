@@ -1,6 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
+  provider   = "prisma-client-js"
+  output     = "../src/generated/prisma"
   engineType = "binary"
 }
 
@@ -62,26 +62,31 @@ model AuthVerification {
 }
 
 model User {
-  id                String    @id @default(cuid())
-  authUserId        String    @unique
-  email             String    @unique
-  displayName       String?
-  bio               String?
-  logoUrl           String?
-  instagramUrl      String?
-  youtubeUrl        String?
-  tiktokUrl         String?
-  twitterUrl        String?
-  snapchatUrl       String?
-  role              Role?
-  credits           Int       @default(0)
-  earnings          Int       @default(0)
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
-  bidsAsCreator     Bid[]     @relation("CreatorBids")
-  briefsAsBrand     Brief[]   @relation("BrandBriefs")
-  projectsAsBrand   Project[] @relation("BrandProjects")
-  projectsAsCreator Project[] @relation("CreatorProjects")
+  id                  String           @id @default(cuid())
+  authUserId          String           @unique
+  email               String           @unique
+  displayName         String?
+  bio                 String?
+  logoUrl             String?
+  instagramUrl        String?
+  youtubeUrl          String?
+  tiktokUrl           String?
+  twitterUrl          String?
+  snapchatUrl         String?
+  role                Role?
+  credits             Int              @default(0)
+  earnings            Int              @default(0)
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+  bidsAsCreator       Bid[]            @relation("CreatorBids")
+  briefsAsBrand       Brief[]          @relation("BrandBriefs")
+  projectsAsBrand     Project[]        @relation("BrandProjects")
+  projectsAsCreator   Project[]        @relation("CreatorProjects")
+  projectsApproved    Project[]        @relation("ProjectApprovals")
+  projectMessages     ProjectMessage[] @relation("ProjectMessages")
+  projectEvents       ProjectEvent[]   @relation("ProjectEvents")
+  brandEscrows        ProjectEscrow[]  @relation("BrandEscrows")
+  creatorEscrows      ProjectEscrow[]  @relation("CreatorEscrows")
 }
 
 model Brief {
@@ -119,6 +124,7 @@ model Bid {
   updatedAt DateTime  @updatedAt
   brief     Brief     @relation(fields: [briefId], references: [id])
   creator   User      @relation("CreatorBids", fields: [creatorId], references: [id])
+  project   Project?
 
   @@unique([briefId, creatorId])
   @@index([creatorId, createdAt])
@@ -126,21 +132,94 @@ model Bid {
 }
 
 model Project {
-  id               String           @id @default(cuid())
-  videoUrl         String?
-  submissionStatus SubmissionStatus @default(PENDING)
-  briefId          String
-  brandId          String
-  creatorId        String
-  createdAt        DateTime         @default(now())
-  updatedAt        DateTime         @updatedAt
-  brand            User             @relation("BrandProjects", fields: [brandId], references: [id])
-  brief            Brief            @relation(fields: [briefId], references: [id])
-  creator          User             @relation("CreatorProjects", fields: [creatorId], references: [id])
+  id                    String           @id @default(cuid())
+  bidId                 String           @unique
+  briefId               String
+  brandId               String
+  creatorId             String
+  agreedAmount          Int
+  status                ProjectStatus    @default(AWAITING_FUNDING)
+  creatorSubmittedAt    DateTime?
+  creatorSubmissionNote String?
+  brandApprovedAt       DateTime?
+  approvedById          String?
+  createdAt             DateTime         @default(now())
+  updatedAt             DateTime         @updatedAt
+  bid                   Bid              @relation(fields: [bidId], references: [id])
+  brief                 Brief            @relation(fields: [briefId], references: [id])
+  brand                 User             @relation("BrandProjects", fields: [brandId], references: [id])
+  creator               User             @relation("CreatorProjects", fields: [creatorId], references: [id])
+  approvedBy            User?            @relation("ProjectApprovals", fields: [approvedById], references: [id])
+  deliverables          ProjectDeliverable[]
+  messages              ProjectMessage[]
+  escrow                ProjectEscrow?
+  events                ProjectEvent[]
 
   @@index([creatorId, createdAt])
   @@index([brandId, createdAt])
   @@index([briefId, createdAt])
+  @@index([status, createdAt])
+}
+
+model ProjectDeliverable {
+  id        String          @id @default(cuid())
+  projectId String
+  platform  String
+  url       String
+  notes     String?
+  sortOrder Int             @default(0)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  project   Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId, sortOrder])
+}
+
+model ProjectMessage {
+  id        String   @id @default(cuid())
+  projectId String
+  senderId  String
+  body      String
+  createdAt DateTime @default(now())
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  sender    User     @relation("ProjectMessages", fields: [senderId], references: [id])
+
+  @@index([projectId, createdAt])
+}
+
+model ProjectEscrow {
+  id            String              @id @default(cuid())
+  projectId     String              @unique
+  brandId       String
+  creatorId     String
+  amount        Int
+  status        EscrowStatus        @default(HELD)
+  holdPlacedAt  DateTime            @default(now())
+  autoReleaseAt DateTime?
+  releasedAt    DateTime?
+  releaseReason EscrowReleaseReason?
+  project       Project             @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  brand         User                @relation("BrandEscrows", fields: [brandId], references: [id])
+  creator       User                @relation("CreatorEscrows", fields: [creatorId], references: [id])
+
+  @@index([brandId, holdPlacedAt])
+  @@index([creatorId, holdPlacedAt])
+  @@index([status, autoReleaseAt])
+}
+
+model ProjectEvent {
+  id        String           @id @default(cuid())
+  projectId String
+  actorId   String?
+  type      ProjectEventType
+  note      String?
+  metadata  Json?
+  createdAt DateTime         @default(now())
+  project   Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  actor     User?            @relation("ProjectEvents", fields: [actorId], references: [id])
+
+  @@index([projectId, createdAt])
+  @@index([type, createdAt])
 }
 
 enum Role {
@@ -161,8 +240,36 @@ enum BidStatus {
   REJECTED
 }
 
-enum SubmissionStatus {
-  PENDING
+enum ProjectStatus {
+  AWAITING_FUNDING
+  ACTIVE
+  SUBMITTED
+  REVISION_REQUESTED
   APPROVED
-  REVISIONS
+  AUTO_RELEASED
+  CANCELED
+}
+
+enum EscrowStatus {
+  HELD
+  RELEASED
+  REFUNDED
+}
+
+enum EscrowReleaseReason {
+  BRAND_APPROVAL
+  AUTO_TIMEOUT
+  MANUAL_REFUND
+}
+
+enum ProjectEventType {
+  ESCROW_HELD
+  MESSAGE_SENT
+  DELIVERABLE_ADDED
+  DELIVERABLE_REMOVED
+  CREATOR_SUBMITTED
+  BRAND_APPROVED
+  REVISION_REQUESTED
+  AUTO_RELEASED
+  ESCROW_REFUNDED
 }

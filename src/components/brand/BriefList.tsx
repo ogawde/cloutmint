@@ -19,9 +19,6 @@ type Brief = {
   id: string;
   title: string;
   productDescription: string;
-  hook1: string;
-  hook2: string;
-  hook3: string;
   reelScript: string;
   status: string;
   bids?: {
@@ -105,27 +102,9 @@ function BriefCard({ brief, userRole }: BriefCardProps) {
         <p className="text-sm text-zinc-400">{brief.productDescription}</p>
       </CardHeader>
       <CardContent className="flex flex-col gap-4 pt-0">
-        <div className="space-y-1">
-          <p className="text-xs uppercase tracking-wide text-zinc-500">
-            Hook 1 · Curiosity
-          </p>
-          <p className="text-sm text-zinc-100">{brief.hook1}</p>
-        </div>
-        <div className="space-y-1">
-          <p className="text-xs uppercase tracking-wide text-zinc-500">
-            Hook 2 · Bold Claim
-          </p>
-          <p className="text-sm text-zinc-100">{brief.hook2}</p>
-        </div>
-        <div className="space-y-1">
-          <p className="text-xs uppercase tracking-wide text-zinc-500">
-            Hook 3 · PAS
-          </p>
-          <p className="text-sm text-zinc-100">{brief.hook3}</p>
-        </div>
         <div className="space-y-2">
           <p className="text-xs uppercase tracking-wide text-zinc-500">
-            Reel Script
+            Creator brief
           </p>
           <div className="rounded-md bg-zinc-900/80 border border-zinc-800 px-3 py-2 max-h-40 overflow-y-auto">
             <p className="text-sm text-zinc-100 whitespace-pre-wrap">
